@@ -1,7 +1,7 @@
 /* eslint-disable max-params */
 const logger = require('@greencoast/logger');
 const onFinished = require('on-finished');
-const Response = require('../classes');
+const Response = require('../classes/Response');
 
 const onlySupportedMethods = (methods) => {
   return (_, res) => {
