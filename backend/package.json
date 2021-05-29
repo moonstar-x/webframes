@@ -1,0 +1,31 @@
+{
+  "name": "webframes-backend",
+  "version": "1.0.0",
+  "description": "Webframes backend.",
+  "main": "src/app.js",
+  "private": true,
+  "scripts": {
+    "start": "node ./src/app.js",
+    "dev": "nodemon npm start",
+    "lint:errors-only": "eslint src --quiet",
+    "lint": "eslint src"
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "author": "moonstar-x",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.27.0",
+    "eslint-config-greencoast": "0.0.2",
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "@greencoast/logger": "^1.0.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "on-finished": "^2.3.0"
+  }
+}
