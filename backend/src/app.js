@@ -1,13 +1,14 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const logger = require('@greencoast/logger');
-const { logRequests, onlySupportedMethods, handleError } = require('./middleware');
+const { logRequests, handleError } = require('./middleware');
 const { ResourceNotFoundError } = require('./errors');
-const Response = require('./classes/Response');
 const api = require('./api');
 
 const HTTP_PORT = process.env.HTTP_PORT || 4000;
+const WEBAPP_PATH = path.join(__dirname, '../../webapp/public');
 
 const app = express();
 app.use(cors());
@@ -17,12 +18,7 @@ app.options('*', cors());
 
 app.use('/api', api);
 
-app.get('/', (req, res) => {
-  const response = new Response(Response.CODES.OK);
-  res.status(response.code).send(response.create());
-});
-
-app.all('/', onlySupportedMethods(['GET']));
+app.use(express.static(WEBAPP_PATH));
 
 app.all('*', () => {
   throw new ResourceNotFoundError('This route is not handled by the server.');
