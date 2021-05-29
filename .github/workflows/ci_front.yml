@@ -1,0 +1,39 @@
+name: CI (Frontend)
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - webapp/**
+  pull_request:
+    branches: [master]
+    paths:
+      - webapp/**
+  workflow_dispatch:
+
+jobs:
+  test:
+    defaults:
+      run:
+        working-directory: ./webapp
+
+    name: Run Tests (Frontend)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Linter
+        run: npm run lint
+
+      - name: Run Build
+        run: npm run build
