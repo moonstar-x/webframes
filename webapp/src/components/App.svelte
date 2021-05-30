@@ -3,8 +3,9 @@
 	import Topbar from './common/Topbar.svelte';
 	import Sidebar from './common/Sidebar.svelte';
 	import FrameHolder from './common/FrameHolder.svelte';
-	import { getSites } from '../networking/sites';
+	import { getSites, getOrder } from '../networking/sites';
 	import { sites, sitesError } from '../stores/sites';
+	import { order, orderError } from '../stores/order';
 
 	let current = null;
 
@@ -14,13 +15,23 @@
 
 	let loading = true;
 	onMount(() => {
-		return getSites()
+		const sitesPromise = getSites()
 			.then((fetchedSites) => {
 				sites.update(fetchedSites);
 			})
 			.catch((error) => {
 				sitesError.update(error);
+			});
+
+		const orderPromise = getOrder()
+			.then((fetchedSites) => {
+				order.update(fetchedSites);
 			})
+			.catch((error) => {
+				orderError.update(error);
+			})
+		
+		Promise.all([sitesPromise, orderPromise])
 			.then(() => {
 				loading = false;
 			});
@@ -45,9 +56,9 @@
 	<main>
 		<span>LOADING</span>
 	</main>
-{:else if $sitesError}
+{:else if $sitesError || $orderError}
 	<main>
-		<span>Oops {$sitesError}</span>
+		<span>Oops {$sitesError || $orderError}</span>
 	</main>
 {:else}
 	<main>
