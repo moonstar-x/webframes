@@ -1,6 +1,9 @@
 <script>
   import SidebarItem from './SidebarItem.svelte';
   import { sites } from '../../../stores/sites';
+  import { order } from '../../../stores/order';
+
+  const orderedSites = $order.map((id) => $sites.find((site) => site.id === id));
 </script>
 
 <style>
@@ -16,7 +19,7 @@
 </style>
 
 <div class="sidebar">
-  {#each $sites as site}
-    <SidebarItem {...site} on:frameHolderUpdate />
+  {#each orderedSites as site (site.id)}
+    <SidebarItem name={site.name} url={site.url} image={site.image} on:frameHolderUpdate />
   {/each}
 </div>

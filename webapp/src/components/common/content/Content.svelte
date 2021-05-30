@@ -7,7 +7,7 @@
 
   const handleFrameHolderUpdate = (e) => {
 		current = e.detail;
-	}
+	};
 </script>
 
 <style>
