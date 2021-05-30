@@ -102,7 +102,7 @@ class SitesDatabase {
     const old = await this.get(id);
     const merged = { ...old, ...newSite };
 
-    await this.db.put(id, JSON.stringify(merged));
+    await this.db.put(`sites:${id}`, JSON.stringify(merged));
     logger.debug(`(DB): Site ${old.name} with id ${old.id} has been updated.`);
 
     return merged;
