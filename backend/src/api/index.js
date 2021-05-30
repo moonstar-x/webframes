@@ -3,6 +3,6 @@ const sites = require('./sites');
 
 const api = express.Router();
 
-api.use('/', sites);
+api.use('/sites', sites);
 
 module.exports = api;
