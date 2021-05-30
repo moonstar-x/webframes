@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import Topbar from './common/Topbar.svelte';
 	import Sidebar from './common/Sidebar.svelte';
-	import FrameHolder from './common/FrameHolder.svelte';
+	import FrameHolder from './common/frameHolder/FrameHolder.svelte';
 	import { getSites, getOrder } from '../networking/sites';
 	import { sites, sitesError } from '../stores/sites';
 	import { order, orderError } from '../stores/order';
