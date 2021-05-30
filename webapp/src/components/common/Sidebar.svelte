@@ -1,3 +1,8 @@
+<script>
+  import { sites } from '../../stores/sites';
+  import SidebarItem from './SidebarItem.svelte';
+</script>
+
 <style>
   .sidebar {
     position: absolute;
@@ -11,5 +16,7 @@
 </style>
 
 <div class="sidebar">
-
+  {#each $sites as site}
+    <SidebarItem {...site} on:frameHolderUpdate />
+  {/each}
 </div>
