@@ -6,8 +6,13 @@
 	import { getSites } from '../networking/sites';
 	import { sites, sitesError } from '../stores/sites';
 
-	let loading = true;
+	let current = null;
 
+	const handleFrameHolderUpdate = (e) => {
+		current = e.detail;
+	}
+
+	let loading = true;
 	onMount(() => {
 		return getSites()
 			.then((fetchedSites) => {
@@ -46,10 +51,10 @@
 	</main>
 {:else}
 	<main>
-		<Topbar />
+		<Topbar text={current?.url} />
 		<div class="content">
-			<Sidebar />
-			<FrameHolder />
+			<Sidebar on:frameHolderUpdate={handleFrameHolderUpdate} />
+			<FrameHolder title={current?.name} url={current?.url} />
 		</div>
 	</main>
 {/if}
