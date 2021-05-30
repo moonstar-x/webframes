@@ -4,17 +4,17 @@
 	import Sidebar from './common/Sidebar.svelte';
 	import FrameHolder from './common/FrameHolder.svelte';
 	import { getSites } from '../networking/sites';
-	import { sitesStore, errorStore } from '../stores/sites';
+	import { sites, sitesError } from '../stores/sites';
 
 	let loading = true;
 
 	onMount(() => {
 		return getSites()
-			.then((sites) => {
-				sitesStore.update(sites);
+			.then((fetchedSites) => {
+				sites.update(fetchedSites);
 			})
 			.catch((error) => {
-				errorStore.update(error);
+				sitesError.update(error);
 			})
 			.then(() => {
 				loading = false;
@@ -39,6 +39,10 @@
 {#if loading}
 	<main>
 		<span>LOADING</span>
+	</main>
+{:else if $sitesError}
+	<main>
+		<span>Oops {$sitesError}</span>
 	</main>
 {:else}
 	<main>

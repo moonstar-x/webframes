@@ -1,4 +1,4 @@
 import { createStore } from '.';
 
-export const sitesStore = createStore([]);
-export const errorStore = createStore(null);
+export const sites = createStore([]);
+export const sitesError = createStore(null);
