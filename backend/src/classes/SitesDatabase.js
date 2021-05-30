@@ -1,6 +1,7 @@
 const level = require('level');
 const { v4: uuid } = require('uuid');
 const logger = require('@greencoast/logger');
+const { ResourceNotFoundError } = require('../errors');
 
 class SitesDatabase {
   constructor(location) {
@@ -32,19 +33,55 @@ class SitesDatabase {
 
   async initializeOrder() {
     try {
-      await this.db.get('sites:order');
+      await this.db.get(SitesDatabase.KEYS.order);
       return false;
     } catch (error) {
       logger.warn('(DB): Order key in SitesDatabase was not found, creating...');
-      await this.db.put('sites:order', []);
+      await this.db.put(SitesDatabase.KEYS.order, JSON.stringify([]));
       return true;
+    }
+  }
+
+  getAll() {
+    return new Promise((resolve, reject) => {
+      const sites = [];
+      let error = null;
+
+      this.db.createReadStream()
+        .on('data', ({ key, value }) => {
+          if (key !== SitesDatabase.KEYS.order) {
+            sites.push(JSON.parse(value));
+          }
+        })
+        .on('error', (err) => {
+          error = err;
+        })
+        .on('end', () => {
+          if (error) {
+            return reject(error);
+          }
+
+          resolve(sites);
+        });
+    });
+  }
+
+  async get(id) {
+    try {
+      return JSON.parse(await this.db.get(`sites:${id}`));
+    } catch (error) {
+      if (error.name === 'NotFoundError') {
+        throw new ResourceNotFoundError(error.message); // Rethrow this error with another instance because our custom errors contain the proper response code in them.
+      }
+
+      throw error;
     }
   }
 
   async create(site) {
     site.id = uuid();
 
-    await this.db.put(`sites:${site.id}`, site);
+    await this.db.put(`sites:${site.id}`, JSON.stringify(site));
     await this.appendToOrder(site.id);
     logger.debug(`(DB): Site ${site.name} created with id ${site.id}`);
 
@@ -52,19 +89,23 @@ class SitesDatabase {
   }
 
   async appendToOrder(id) {
-    const order = await this.db.get('sites:order');
+    const order = JSON.parse(await this.db.get(SitesDatabase.KEYS.order));
     return this.updateOrder([...order, id]);
   }
 
   async removeFromOrder(id) {
-    const order = await this.db.get('sites:order');
+    const order = JSON.parse(await this.db.get(SitesDatabase.KEYS.order));
     return this.updateOrder(order.filter((x) => x !== id));
   }
 
   updateOrder(newOrder) {
     logger.debug('(DB): Order keys has been updated.');
-    return this.db.put('sites:order', newOrder);
+    return this.db.put(SitesDatabase.KEYS.order, JSON.stringify(newOrder));
   }
 }
+
+SitesDatabase.KEYS = {
+  order: 'sites:order'
+};
 
 module.exports = SitesDatabase;

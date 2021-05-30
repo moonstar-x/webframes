@@ -10,7 +10,16 @@ const { sitesDB } = require('../db');
 const router = express.Router();
 router.use(bodyParser.json());
 
-router.post('/sites', (req, res, next) => {
+router.get('/', (req, res, next) => {
+  return sitesDB.getAll()
+    .then((sites) => {
+      const response = new Response(Response.CODES.OK);
+      res.status(response.code).send(response.create(sites));
+    })
+    .catch(next);
+});
+
+router.post('/', (req, res, next) => {
   const { body } = req;
 
   if (!body || Object.keys(body).length < 1) {
@@ -27,6 +36,19 @@ router.post('/sites', (req, res, next) => {
     .catch(next);
 });
 
-router.all('/sites', onlySupportedMethods(['POST']));
+router.all('/', onlySupportedMethods(['GET, POST']));
+
+router.get('/:id', (req, res, next) => {
+  const { id } = req.params;
+
+  return sitesDB.get(id)
+    .then((sites) => {
+      const response = new Response(Response.CODES.OK);
+      res.status(response.code).send(response.create(sites));
+    })
+    .catch(next);
+});
+
+router.all('/:id', onlySupportedMethods(['GET, POST']));
 
 module.exports = router;
