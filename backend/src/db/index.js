@@ -11,6 +11,11 @@ sitesDB.init()
     logger.fatal('Something happened when loading the database.', error);
   });
 
+process.on('exit', async() => {
+  logger.info('Exit signal received, gracefully closing database...');
+  await sitesDB.destroy();
+});
+
 module.exports = {
   sitesDB
 };
