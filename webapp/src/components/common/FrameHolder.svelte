@@ -17,6 +17,13 @@
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
   }
+
+  iframe {
+    width: calc(100% - var(--sidebar-width));
+    margin-left: var(--sidebar-width);
+    height: 100%;
+    border: none;
+  }
 </style>
 
 {#if url}
