@@ -13,3 +13,11 @@ export const getSites = () => {
       throw response.error;
     });
 };
+
+export const getOrder = () => {
+  return axios.get(endpoint('/sites/order'))
+    .then((response) => response.data.data)
+    .catch((response) => {
+      throw response.error;
+    });
+};
