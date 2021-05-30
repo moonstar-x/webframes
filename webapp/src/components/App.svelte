@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
-	import Topbar from './common/Topbar.svelte';
-	import Sidebar from './common/Sidebar.svelte';
+	import Topbar from './common/topbar/Topbar.svelte';
+	import Sidebar from './common/sidebar/Sidebar.svelte';
 	import FrameHolder from './common/frameHolder/FrameHolder.svelte';
 	import { getSites, getOrder } from '../networking/sites';
 	import { sites, sitesError } from '../stores/sites';
@@ -31,7 +31,7 @@
 				orderError.update(error);
 			})
 		
-		Promise.all([sitesPromise, orderPromise])
+		return Promise.all([sitesPromise, orderPromise])
 			.then(() => {
 				loading = false;
 			});

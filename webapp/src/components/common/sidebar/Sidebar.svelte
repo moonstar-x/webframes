@@ -1,5 +1,5 @@
 <script>
-  import { sites } from '../../stores/sites';
+  import { sites } from '../../../stores/sites';
   import SidebarItem from './SidebarItem.svelte';
 </script>
 
