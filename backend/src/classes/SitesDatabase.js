@@ -1,7 +1,7 @@
 const level = require('level');
 const { v4: uuid } = require('uuid');
 const logger = require('@greencoast/logger');
-const { ResourceNotFoundError } = require('../errors');
+const { ResourceNotFoundError, InvalidOrderError } = require('../errors');
 
 class SitesDatabase {
   constructor(location) {
@@ -108,19 +108,40 @@ class SitesDatabase {
     return merged;
   }
 
+  async getOrder() {
+    return JSON.parse(await this.db.get(SitesDatabase.KEYS.order));
+  }
+
   async appendToOrder(id) {
-    const order = JSON.parse(await this.db.get(SitesDatabase.KEYS.order));
+    const order = await this.getOrder();
     return this.updateOrder([...order, id]);
   }
 
   async removeFromOrder(id) {
-    const order = JSON.parse(await this.db.get(SitesDatabase.KEYS.order));
+    const order = await this.getOrder();
     return this.updateOrder(order.filter((x) => x !== id));
   }
 
   updateOrder(newOrder) {
-    logger.debug('(DB): Order keys has been updated.');
+    logger.debug('(DB): Order has been updated.');
     return this.db.put(SitesDatabase.KEYS.order, JSON.stringify(newOrder));
+  }
+
+  async updateOrderExpensive(newOrder) {
+    const all = await this.getOrder();
+
+    if (all.length !== newOrder.length) {
+      throw new InvalidOrderError('New order size must be the same as the current number of sites!');
+    }
+
+    for (const id of newOrder) {
+      if (!all.includes(id)) {
+        throw new InvalidOrderError('New order must contain all sites!');
+      }
+    }
+
+    await this.updateOrder(newOrder);
+    return newOrder;
   }
 }
 

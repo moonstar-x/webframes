@@ -38,6 +38,32 @@ router.post('/', (req, res, next) => {
 
 router.all('/', onlySupportedMethods(['GET', 'POST']));
 
+router.get('/order', (req, res, next) => {
+  return sitesDB.getOrder()
+    .then((order) => {
+      const response = new Response(Response.CODES.OK);
+      return res.status(response.code).send(response.create(order));
+    })
+    .catch(next);
+});
+
+router.put('/order', (req, res, next) => {
+  const { body } = req;
+
+  if (!body) {
+    throw new InvalidBodyError(Response.DEFAULT_MESSAGES.MISSING_JSON_BODY);
+  }
+
+  return sitesDB.updateOrderExpensive(body)
+    .then((updated) => {
+      const response = new Response(Response.CODES.OK);
+      return res.status(response.code).send(response.create(updated));
+    })
+    .catch(next);
+});
+
+router.all('/order', onlySupportedMethods(['GET', 'PUT']));
+
 router.get('/:id', (req, res, next) => {
   const { id } = req.params;
 
