@@ -1,17 +1,11 @@
 <script>
 	import { onMount } from 'svelte';
-	import Topbar from './common/topbar/Topbar.svelte';
-	import Sidebar from './common/sidebar/Sidebar.svelte';
-	import FrameHolder from './common/frameHolder/FrameHolder.svelte';
+	import LoadingSpinner from './common/loadingSpinner/LoadingSpinner.svelte';
+	import RequestError from './common/requestError/RequestError.svelte';
+	import Content from './common/content/Content.svelte';
 	import { getSites, getOrder } from '../networking/sites';
 	import { sites, sitesError } from '../stores/sites';
 	import { order, orderError } from '../stores/order';
-
-	let current = null;
-
-	const handleFrameHolderUpdate = (e) => {
-		current = e.detail;
-	}
 
 	let loading = true;
 	onMount(() => {
@@ -44,28 +38,14 @@
 		width: 100%;
 		text-align: center;
 	}
-
-	.content {
-		position: relative;
-		width: 100%;
-		height: calc(100% - var(--topbar-height));
-	}
 </style>
 
-{#if loading}
-	<main>
-		<span>LOADING</span>
-	</main>
-{:else if $sitesError || $orderError}
-	<main>
-		<span>Oops {$sitesError || $orderError}</span>
-	</main>
-{:else}
-	<main>
-		<Topbar text={current?.url} />
-		<div class="content">
-			<Sidebar on:frameHolderUpdate={handleFrameHolderUpdate} />
-			<FrameHolder title={current?.name} url={current?.url} />
-		</div>
-	</main>
-{/if}
+<main>
+	{#if loading}
+		<LoadingSpinner />
+	{:else if $sitesError || $orderError}
+		<RequestError error={$sitesError || $orderError} />
+	{:else}
+		<Content />
+	{/if}
+</main>

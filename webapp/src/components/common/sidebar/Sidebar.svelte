@@ -1,6 +1,6 @@
 <script>
-  import { sites } from '../../../stores/sites';
   import SidebarItem from './SidebarItem.svelte';
+  import { sites } from '../../../stores/sites';
 </script>
 
 <style>
