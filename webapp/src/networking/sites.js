@@ -9,15 +9,15 @@ const endpoint = (route) => {
 export const getSites = () => {
   return axios.get(endpoint('/sites'))
     .then((response) => response.data.data)
-    .catch((response) => {
-      throw response.error;
+    .catch((error) => {
+      throw error.response?.data.message || error.message;
     });
 };
 
 export const getOrder = () => {
   return axios.get(endpoint('/sites/order'))
     .then((response) => response.data.data)
-    .catch((response) => {
-      throw response.error;
+    .catch((error) => {
+      throw error.response?.data.message || error.message;
     });
 };
