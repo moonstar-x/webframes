@@ -88,6 +88,26 @@ class SitesDatabase {
     return site;
   }
 
+  async delete(id) {
+    const old = await this.get(id);
+
+    await this.db.del(`sites:${id}`);
+    await this.removeFromOrder(id);
+    logger.debug(`(DB): Site ${old.name} with id ${old.id} removed from database.`);
+
+    return old;
+  }
+
+  async update(id, newSite) {
+    const old = await this.get(id);
+    const merged = { ...old, ...newSite };
+
+    await this.db.put(id, JSON.stringify(merged));
+    logger.debug(`(DB): Site ${old.name} with id ${old.id} has been updated.`);
+
+    return merged;
+  }
+
   async appendToOrder(id) {
     const order = JSON.parse(await this.db.get(SitesDatabase.KEYS.order));
     return this.updateOrder([...order, id]);
