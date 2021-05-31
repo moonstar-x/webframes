@@ -1,10 +1,11 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import Modal from './Modal.svelte';
+  import AddSiteForm from '../form/AddSiteForm.svelte';
 
   const dispatch = createEventDispatcher();
 
-  const handleCloseButtonClick = () => {
+  const handleCloseModal = () => {
     dispatch('close');
   };
 
@@ -22,9 +23,9 @@
     <h3>Add a new site</h3>
   </svelte:fragment>
   <svelte:fragment slot="modal-content">
-    
+    <AddSiteForm on:success={handleCloseModal} />
   </svelte:fragment>
   <svelte:fragment slot="modal-footer">
-    <button on:click={handleCloseButtonClick}>CLOSE</button>
+    <button on:click={handleCloseModal}>CLOSE</button>
   </svelte:fragment>
 </Modal>
