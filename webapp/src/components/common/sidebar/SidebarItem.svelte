@@ -3,6 +3,7 @@
 
   export let site;
   export let active = false;
+  export let extra = false;
 
   const handleClick = () => {
     currentSite.update(site);
@@ -90,14 +91,31 @@
     width: inherit;
     border-radius: inherit;
   }
+
+  .extra {
+    color: var(--sidebar-item-bg);
+  }
+
+  .extra:hover {
+    color: var(--text-over-dark);
+  }
 </style>
 
-<li class:active on:click={handleClick}>
-  {#if site.image}
-    <img alt={site.name} src={site.image} />
-  {/if}
-  <div class="popper">
-    <h4 class="popper-text">{site.name}</h4>
-    <h6 class="popper-text">{site.url}</h6>
-  </div>
-</li>
+{#if !extra}
+  <li class:active on:click={handleClick}>
+    {#if site.image}
+      <img alt={site.name} src={site.image} />
+    {/if}
+    <div class="popper">
+      <h4 class="popper-text">{site.name}</h4>
+      <h6 class="popper-text">{site.url}</h6>
+    </div>
+  </li>
+{:else}
+  <li class:extra on:click>
+    <slot />
+    <div class="popper">
+      <h4 class="popper-text">{site.name}</h4>
+    </div>
+  </li>
+{/if}
