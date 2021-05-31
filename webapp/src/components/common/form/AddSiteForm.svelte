@@ -1,6 +1,8 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import { postSite } from '../../../networking/sites';
+  import { getImageWithInitials } from '../../../networking/imageGenerator';
+  import { imageToDataURI } from '../../../utils';
   import { sites } from '../../../stores/sites';
   import { order } from '../../../stores/order';
 
@@ -14,14 +16,13 @@
 
   const handleImagePick = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (e) => {
-      image = e.target.result;
-    };
+    return imageToDataURI(file)
+      .then((uri) => {
+        image = uri;
+      });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     if (!name) {
@@ -34,16 +35,16 @@
       return;
     }
 
-    return postSite({ name, url, image })
-      .then((newSite) => {
-        console.log(newSite)
-        sites.add(newSite);
-        order.add(newSite.id);
-        dispatch('success');
-      })
-      .catch((err) => {
-        error = err;
-      });
+    try {
+      const siteImage = image || await getImageWithInitials(name);
+      const newSite = await postSite({ name, url, image: siteImage });
+
+      sites.add(newSite);
+      order.add(newSite.id);
+      dispatch('success');
+    } catch (err) {
+      error = err;
+    }
   };
 </script>
 
