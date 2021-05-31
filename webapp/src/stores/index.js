@@ -8,3 +8,13 @@ export const createStore = (initial) => {
     update: (data) => set(data)
   };
 };
+
+export const createArrayStore = (initial) => {
+  const { subscribe, set, update: storeUpdate } = writable(initial);
+
+  return {
+    subscribe,
+    update: (data) => set(data),
+    add: (data) => storeUpdate((old) => [...old, data])
+  };
+};

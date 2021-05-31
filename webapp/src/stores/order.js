@@ -1,4 +1,4 @@
-import { createStore } from '.';
+import { createStore, createArrayStore } from '.';
 
-export const order = createStore([]);
+export const order = createArrayStore([]);
 export const orderError = createStore(null);
