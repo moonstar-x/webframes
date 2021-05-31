@@ -28,7 +28,14 @@
     padding: var(--sidebar-padding);
     background-color: var(--bg-dark);
     transition: transform var(--hide-anim-duration) ease-in-out;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
+
+  nav::-webkit-scrollbar {
+  display: none;
+}
 
   ul {
     display: flex;
