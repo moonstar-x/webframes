@@ -4,23 +4,27 @@
 	import FrameHolder from '../frameHolder/FrameHolder.svelte';
 
   let current = null;
+  let showSidebar = true;
 
   const handleFrameHolderUpdate = (e) => {
 		current = e.detail;
 	};
+
+  const handleToggleSidebar = () => {
+    showSidebar = !showSidebar;
+  }
 </script>
 
 <style>
   .content {
-    display: flex;
 		position: relative;
 		width: 100%;
-		height: calc(100% - var(--topbar-height));
+		height: calc(100vh - var(--topbar-height));
 	}
 </style>
 
-<Topbar text={current?.url} />
+<Topbar text={current?.url} on:toggleSidebar={handleToggleSidebar} />
 <div class="content">
-  <Sidebar on:frameHolderUpdate={handleFrameHolderUpdate} />
-  <FrameHolder title={current?.name} url={current?.url} />
+  <Sidebar on:frameHolderUpdate={handleFrameHolderUpdate} show={showSidebar} />
+  <FrameHolder title={current?.name} url={current?.url} sidebarVisible={showSidebar} />
 </div>

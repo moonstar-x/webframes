@@ -4,12 +4,20 @@
   import { order } from '../../../stores/order';
 
   const orderedSites = $order.map((id) => $sites.find((site) => site.id === id));
+
+  export let show = true;
 </script>
 
 <style>
   nav {
-    height: 100%;
-    width: fit-content;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-icon-size);
+    padding: var(--sidebar-padding);
+    background-color: var(--bg-dark);
+    transition: transform var(--hide-anim-duration) ease-in-out;
   }
 
   ul {
@@ -18,13 +26,17 @@
     gap: 1rem;
     list-style: none;
     margin: 0;
-    min-height: calc(100% - 2rem); /* - 2x padding */
-    padding: 1rem;
-    background-color: var(--bg-dark);
+    padding: 0;
+    min-height: 100%;
+    width: inherit;
+  }
+
+  .sidebar-hide {
+    transform: translateX(-100%);
   }
 </style>
 
-<nav>
+<nav class:sidebar-hide={!show}>
   <ul>
     {#each orderedSites as site (site.id)}
       <SidebarItem name={site.name} url={site.url} image={site.image} on:frameHolderUpdate />

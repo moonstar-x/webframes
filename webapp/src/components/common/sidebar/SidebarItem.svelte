@@ -18,8 +18,8 @@
     position: relative;
     justify-content: center;
     align-items: center;
-    width: 48px;
-    height: 48px;
+    width: var(--sidebar-icon-size);
+    height: var(--sidebar-icon-size);
     border-radius: 50%;
     background: var(--bg-dark-accent);
     cursor: pointer;

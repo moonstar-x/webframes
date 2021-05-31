@@ -18,5 +18,9 @@ body {
 	--bg-dark-accent: #666;
 
 	--topbar-height: 2rem;
-	--sidebar-width: 4rem;
+
+	--sidebar-icon-size: 48px;
+	--sidebar-padding: 1rem;
+
+	--hide-anim-duration: 500ms;
 }
