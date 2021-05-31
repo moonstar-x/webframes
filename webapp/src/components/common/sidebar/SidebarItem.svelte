@@ -21,11 +21,12 @@
     background: var(--bg-dark-accent);
     cursor: pointer;
     text-decoration: none;
-    transition: border-radius 128ms;
+    transition: border-radius 128ms, background 128ms;
   }
 
   li:hover {
     border-radius: 36%;
+    background: var(--sidebar-item-bg);
   }
 
   li::before {
@@ -80,12 +81,12 @@
     transform: translateY(-50%) rotate(45deg);
   }
 
-  .popper-text {
+  h4, h6 {
     color: var(--text-over-dark);
     margin: 0;
   }
 
-  .site-icon {
+  img {
     width: inherit;
     border-radius: inherit;
   }
@@ -93,7 +94,7 @@
 
 <li class:active on:click={handleClick}>
   {#if site.image}
-    <img class="site-icon" alt={site.name} src={site.image} />
+    <img alt={site.name} src={site.image} />
   {/if}
   <div class="popper">
     <h4 class="popper-text">{site.name}</h4>
