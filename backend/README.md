@@ -73,7 +73,7 @@ Create a new site in the database. Requires an `application/json` body with the 
 |----------|---------------------|---------------------------------------------------------|
 | name     | String **Required** | The site's name.                                        |
 | url      | String **Required** | The site's URL.                                         |
-| image    | String              | The site's image encoded in base64. Defaults to `null`. |
+| image    | String              | The site's image dataURI in base64. Defaults to `null`. |
 
 **Response**:
 
@@ -136,7 +136,7 @@ Update a particular site from the database. Requires an `application/json` body 
 |----------|--------|---------------------------------------------------------|
 | name     | String | The site's name.                                        |
 | url      | String | The site's URL.                                         |
-| image    | String | The site's image encoded in base64. Defaults to `null`. |
+| image    | String | The site's image dataURI in base64. Defaults to `null`. |
 
 > Only add the properties you wish to edit.
 

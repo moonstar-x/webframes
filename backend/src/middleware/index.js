@@ -32,7 +32,7 @@ const logRequests = (req, res, next) => {
       return;
     }
 
-    logger.info(`${req.method}:${req.path} ${res.statusCode} (${req.ip})`);
+    logger.info(`${req.method}:${req.originalUrl} ${res.statusCode} (${req.ip})`);
   });
 
   next();
