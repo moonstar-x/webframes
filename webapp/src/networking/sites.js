@@ -10,7 +10,7 @@ export const getSites = () => {
   return axios.get(endpoint('/sites'))
     .then((response) => response.data.data)
     .catch((error) => {
-      throw error.response?.data.message || error.message;
+      throw error.response?.data.error || error.response?.data.message || error.message;
     });
 };
 
@@ -18,7 +18,7 @@ export const getOrder = () => {
   return axios.get(endpoint('/sites/order'))
     .then((response) => response.data.data)
     .catch((error) => {
-      throw error.response?.data.message || error.message;
+      throw error.response?.data.error || error.response?.data.message || error.message;
     });
 };
 
@@ -26,6 +26,6 @@ export const postSite = (site) => {
   return axios.post(endpoint('/sites'), site)
     .then((response) => response.data.data)
     .catch((error) => {
-      throw error.response?.data.message || error.message;
+      throw error.response?.data.error || error.response?.data.message || error.message;
     });
 };
