@@ -2,13 +2,9 @@
   import Topbar from '../topbar/Topbar.svelte';
   import Sidebar from '../sidebar/Sidebar.svelte';
 	import FrameHolder from '../frameHolder/FrameHolder.svelte';
+  import { currentSite } from '../../../stores/sites'; 
 
-  let current = null;
   let showSidebar = true;
-
-  const handleFrameHolderUpdate = (e) => {
-		current = e.detail;
-	};
 
   const handleToggleSidebar = () => {
     showSidebar = !showSidebar;
@@ -23,8 +19,8 @@
 	}
 </style>
 
-<Topbar text={current?.url} on:toggleSidebar={handleToggleSidebar} />
+<Topbar text={$currentSite?.url} on:toggleSidebar={handleToggleSidebar} />
 <div class="content">
-  <Sidebar on:frameHolderUpdate={handleFrameHolderUpdate} show={showSidebar} />
-  <FrameHolder title={current?.name} url={current?.url} sidebarVisible={showSidebar} />
+  <Sidebar show={showSidebar} />
+  <FrameHolder title={$currentSite?.name} url={$currentSite?.url} sidebarVisible={showSidebar} />
 </div>

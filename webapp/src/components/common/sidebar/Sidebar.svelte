@@ -1,6 +1,6 @@
 <script>
   import SidebarItem from './SidebarItem.svelte';
-  import { sites } from '../../../stores/sites';
+  import { currentSite, sites } from '../../../stores/sites';
   import { order } from '../../../stores/order';
 
   const orderedSites = $order.map((id) => $sites.find((site) => site.id === id));
@@ -39,7 +39,7 @@
 <nav class:sidebar-hide={!show}>
   <ul>
     {#each orderedSites as site (site.id)}
-      <SidebarItem name={site.name} url={site.url} image={site.image} on:frameHolderUpdate />
+      <SidebarItem active={$currentSite ? site.id === $currentSite.id : false} {site} />
     {/each}
   </ul>
 </nav>

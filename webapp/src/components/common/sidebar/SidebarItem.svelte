@@ -1,14 +1,11 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { currentSite } from '../../../stores/sites';
 
-  const dispatch = createEventDispatcher();
-
-  export let name;
-  export let url;
-  export let image;
+  export let site;
+  export let active = false;
 
   const handleClick = () => {
-    dispatch('frameHolderUpdate', { name, url });
+    currentSite.update(site);
   }
 </script>
 
@@ -39,12 +36,16 @@
     top: 50%;
     border-radius: 4px;
     background: var(--text-over-dark);
-    transform: translate(-150%, -50%) scale(0);
+    transform: translate(-100%, -50%) scale(0);
     transition: transform 128ms;
   }
 
-  li:hover::before {
-    transform: translate(-150%, -50%) scale(0.5);
+  li:not(.active):hover::before {
+    transform: translate(-100%, -50%) scale(0.5);
+  }
+
+  .active::before {
+    transform: translate(-110%, -50%) scale(0.75);
   }
 
   li:hover .popper {
@@ -90,12 +91,12 @@
   }
 </style>
 
-<li on:click={handleClick}>
-  {#if image}
-    <img class="site-icon" alt={name} src={image} />
+<li class:active on:click={handleClick}>
+  {#if site.image}
+    <img class="site-icon" alt={site.name} src={site.image} />
   {/if}
   <div class="popper">
-    <h4 class="popper-text">{name}</h4>
-    <h6 class="popper-text">{url}</h6>
+    <h4 class="popper-text">{site.name}</h4>
+    <h6 class="popper-text">{site.url}</h6>
   </div>
 </li>
