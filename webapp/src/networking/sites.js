@@ -21,3 +21,11 @@ export const getOrder = () => {
       throw error.response?.data.message || error.message;
     });
 };
+
+export const postSite = (site) => {
+  return axios.post(endpoint('/sites'), site)
+    .then((response) => response.data.data)
+    .catch((error) => {
+      throw error.response?.data.message || error.message;
+    });
+};
