@@ -1,5 +1,6 @@
 <script>
   import SidebarItem from './SidebarItem.svelte';
+  import AddSiteSidebarItem from './AddSiteSidebarItem.svelte';
   import { currentSite, sites } from '../../../stores/sites';
   import { order } from '../../../stores/order';
 
@@ -34,12 +35,6 @@
   .sidebar-hide {
     transform: translateX(-100%);
   }
-
-  h2 {
-    font-size: 35px;
-    font-family: 'Varela Round', 'Roboto', sans-serif;
-    margin: 0;
-  }
 </style>
 
 <nav class:sidebar-hide={!show}>
@@ -47,8 +42,6 @@
     {#each orderedSites as site (site.id)}
       <SidebarItem active={$currentSite ? site.id === $currentSite.id : false} {site} />
     {/each}
-    <SidebarItem site={{ name: 'Add site' }} extra={true}>
-      <h2>+</h2>
-    </SidebarItem>
+    <AddSiteSidebarItem />
   </ul>
 </nav>
