@@ -25,7 +25,4 @@
   <svelte:fragment slot="modal-content">
     <AddSiteForm on:success={handleCloseModal} />
   </svelte:fragment>
-  <svelte:fragment slot="modal-footer">
-    <button on:click={handleCloseModal}>CLOSE</button>
-  </svelte:fragment>
 </Modal>

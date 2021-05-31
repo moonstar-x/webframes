@@ -81,12 +81,16 @@
         {/if}
         <slot name="modal-header" />
       </div>
-      <div class="modal-body">
-        <slot name="modal-content" />
-      </div>
-      <div class="modal-footer">
-        <slot name="modal-footer" />
-      </div>
+      {#if $$slots['modal-content']}
+        <div class="modal-body">
+          <slot name="modal-content" />
+        </div>
+      {/if}
+      {#if $$slots['modal-footer']}
+        <div class="modal-footer">
+          <slot name="modal-footer" />
+        </div>
+      {/if}
     </div>
   </div>
 {/if}
