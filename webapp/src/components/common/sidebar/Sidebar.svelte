@@ -1,12 +1,21 @@
 <script>
+  import { onDestroy } from 'svelte';
   import SidebarItem from './SidebarItem.svelte';
   import AddSiteSidebarItem from './AddSiteSidebarItem.svelte';
   import { currentSite, sites } from '../../../stores/sites';
   import { order } from '../../../stores/order';
 
-  const orderedSites = $order.map((id) => $sites.find((site) => site.id === id));
+  let orderedSites = [];
+
+  const unsubscribeOrder = order.subscribe((value) => {
+    orderedSites = value.map((id) => $sites.find((site) => site.id === id));
+  });
 
   export let show = true;
+
+  onDestroy(() => {
+    unsubscribeOrder();
+  });
 </script>
 
 <style>
