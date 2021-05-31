@@ -13,7 +13,9 @@ body {
 
 :root {
 	--text-over-dark: #fff;
+	--bg-black: #000;
 	--bg-dark: #444;
+	--bg-dark-accent: #666;
 
 	--topbar-height: 2rem;
 	--sidebar-width: 4rem;

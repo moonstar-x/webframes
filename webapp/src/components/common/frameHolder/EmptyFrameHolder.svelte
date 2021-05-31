@@ -1,9 +1,8 @@
 <style>
   .empty-frame {
-    height: 100%;
-    width: calc(100% - var(--sidebar-width));
-    margin-left: var(--sidebar-width);
     position: relative;
+    height: 100%;
+    width: 100%;
   }
 
   .empty-frame-content {

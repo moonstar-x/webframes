@@ -7,7 +7,6 @@
     position: relative;
     width: 100%;
     height: var(--topbar-height);
-
     background-color: var(--bg-dark);
     color: var(--text-over-dark);
   }
@@ -17,8 +16,7 @@
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
-
-    font-size: 1.2em;
+    font-size: 1.2rem;
   }
 </style>
 

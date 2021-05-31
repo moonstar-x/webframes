@@ -7,8 +7,7 @@
 
 <style>
   iframe {
-    width: calc(100% - var(--sidebar-width));
-    margin-left: var(--sidebar-width);
+    width: 100%;
     height: 100%;
     border: none;
   }

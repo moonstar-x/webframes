@@ -7,19 +7,27 @@
 </script>
 
 <style>
-  .sidebar {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: var(--sidebar-width);
+  nav {
     height: 100%;
+    width: fit-content;
+  }
 
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    min-height: calc(100% - 2rem); /* - 2x padding */
+    padding: 1rem;
     background-color: var(--bg-dark);
   }
 </style>
 
-<div class="sidebar">
-  {#each orderedSites as site (site.id)}
-    <SidebarItem name={site.name} url={site.url} image={site.image} on:frameHolderUpdate />
-  {/each}
-</div>
+<nav>
+  <ul>
+    {#each orderedSites as site (site.id)}
+      <SidebarItem name={site.name} url={site.url} image={site.image} on:frameHolderUpdate />
+    {/each}
+  </ul>
+</nav>
