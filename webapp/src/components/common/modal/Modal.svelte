@@ -26,10 +26,10 @@
 
   .modal-content {
     min-height: 10vh;
-    max-height: 70vh;
+    max-height: 80vh;
     overflow-y: scroll;
     background-color: var(--bg-light-gray);
-    margin: 20vh auto 10vh auto;
+    margin: 10vh auto;
     padding: 0;
     border: 1px solid #888;
     border-radius: 10px;
@@ -55,6 +55,7 @@
 
   .modal-body {
     padding: 1rem;
+    background: var(--bg-light-gray);
   }
 
   .close {

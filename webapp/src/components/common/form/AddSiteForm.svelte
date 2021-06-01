@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte';
+  import ErrorAlert from '../alert/ErrorAlert.svelte';
   import { postSite } from '../../../networking/sites';
   import { getImageWithInitials } from '../../../networking/imageGenerator';
   import { imageToDataURI } from '../../../utils';
@@ -49,41 +50,120 @@
 </script>
 
 <style>
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
   label {
     display: block;
+    width: 100%;
+    margin-bottom: 0.3rem;
+  }
+
+  .required label::after {
+    content: '*';
+    color: red;
+    margin-left: 0.25rem;
   }
 
   input {
     display: block;
+    width: inherit;
   }
 
-  .required label::after {
-    content: '* Required';
-    color: red;
-    margin-left: 10px;
+  input[type="text"] {
+    border: none;
+    border-bottom: 1px solid #444;
+    width: 100%;
+    font-size: 1em;
+  }
+
+  input[type="text"]:focus {
+    border-bottom: 2px solid #000;
+    outline: none;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .form-section {
+    display: flex;
+  }
+
+  .form-group {
+    flex: 1;
+  }
+
+  .text-form {
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  @media only screen and (max-width: 576px) {
+    .text-form {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+
+  .button {
+    padding: 10px;
+    background: var(--bg-dark);
+    color: var(--text-over-dark);
+    border-radius: 5px;
+    text-align: center;
+    width: inherit;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    border: 2px solid var(--bg-dark);
+    margin: 0;
+    font-size: 1em;
+  }
+
+  .button:hover, .button:focus, .button:active {
+    background: var(--bg-dark-accent);
+    border: 2px solid var(--bg-dark);
+  }
+
+  hr {
+    margin: 0;
+    color: #000;
+  }
+
+  img {
+    display: block;
+    margin: 1rem auto 0 auto;
+    width: 100%;
+    max-width: 256px;
   }
 </style>
 
 <form on:submit={handleSubmit}>
   {#if error}
-    <div class="form-error">
-      {error}
-    </div>
+    <ErrorAlert {error} />
   {/if}
-  <div class="form-group required">
-    <label for="fname">Name:</label>
-    <input type="text" id="fname" bind:value={name} />
+  <div class="form-section text-form">
+    <div class="form-group required">
+      <label for="fname">Name:</label>
+      <input type="text" id="fname" bind:value={name} placeholder="Required" autocomplete="off" />
+    </div>
+    <div class="form-group required">
+      <label for="furl">URL:</label>
+      <input type="text" id="furl" bind:value={url} placeholder="Required" autocomplete="off" />
+    </div>
   </div>
-  <div class="form-group required">
-    <label for="furl">URL:</label>
-    <input type="text" id="furl" bind:value={url} />
+  <div class="form-section image-form">
+    <div class="form-group">
+      <label class="button" for="fimage">Upload Image</label>
+      <input type="file" id="fimage" accept="image/*" on:change={handleImagePick} />
+      {#if image}
+        <img alt="preview" src={image} />
+      {/if}
+    </div>
   </div>
-  <div class="form-group">
-    <label for="fimage">Upload image:</label>
-    <input type="file" id="fimage" accept="image/*" on:change={handleImagePick} />
-    {#if image}
-      <img alt="preview" src={image} />
-    {/if}
-  </div>
-  <input type="submit" value="Add" />
+  <hr />
+  <input class="button" type="submit" value="Add" />
 </form>
