@@ -15,6 +15,15 @@
   let url = '';
   let image = null;
 
+  let nameInvalid = false;
+  let urlInvalid = false;
+
+  const clearError = () => {
+    nameInvalid = false;
+    urlInvalid = false;
+    error = '';
+  };
+
   const handleImagePick = (e) => {
     const file = e.target.files[0];
     return imageToDataURI(file)
@@ -28,11 +37,13 @@
 
     if (!name) {
       error = 'Name is required!';
+      nameInvalid = true;
       return;
     }
 
     if (!url) {
       error = 'URL is required!';
+      urlInvalid = true;
       return;
     }
 
@@ -44,7 +55,13 @@
       order.add(newSite.id);
       dispatch('success');
     } catch (err) {
-      error = err;
+      if (err.endsWith('uri')) {
+        error = 'URL needs to be a valid URI!';
+        urlInvalid = true;
+        return;
+      }
+
+      error = `Request Error: ${err}`;
     }
   };
 </script>
@@ -139,6 +156,10 @@
     width: 100%;
     max-width: 256px;
   }
+
+  .invalid {
+    border-color: red !important;
+  }
 </style>
 
 <form on:submit={handleSubmit}>
@@ -148,11 +169,11 @@
   <div class="form-section text-form">
     <div class="form-group required">
       <label for="fname">Name:</label>
-      <input type="text" id="fname" bind:value={name} placeholder="Required" autocomplete="off" />
+      <input class:invalid={nameInvalid} type="text" id="fname" bind:value={name} placeholder="Required" autocomplete="off" on:input={clearError} />
     </div>
     <div class="form-group required">
       <label for="furl">URL:</label>
-      <input type="text" id="furl" bind:value={url} placeholder="Required" autocomplete="off" />
+      <input class:invalid={urlInvalid} type="text" id="furl" bind:value={url} placeholder="Required" autocomplete="off" on:input={clearError} />
     </div>
   </div>
   <div class="form-section image-form">
