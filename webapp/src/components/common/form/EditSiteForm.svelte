@@ -200,5 +200,5 @@
     </div>
   </div>
   <hr />
-  <input class="button" type="submit" value="Add" />
+  <input class="button" type="submit" value="Update" />
 </form>
