@@ -49,6 +49,7 @@
     cursor: pointer;
     text-decoration: none;
     transition: border-radius 128ms, background 128ms;
+    outline: none;
   }
 
   li:hover {
@@ -126,10 +127,14 @@
   .extra:hover {
     color: var(--text-over-dark);
   }
+
+  :global(#dnd-action-dragged-el .popper, li#dnd-action-dragged-el::before) {
+    display: none !important;
+  }
 </style>
 
 {#if !extra}
-  <li class:active on:click={handleClick} on:contextmenu={handleContextMenuOpen} on:mouseover={handleItemHover}>
+  <li class:active on:click={handleClick} on:contextmenu={handleContextMenuOpen} on:mouseover={handleItemHover} on:mousedown on:touchstart on:mouseup on:touchend>
     {#if site.image}
       <img alt={site.name} src={site.image} />
     {/if}

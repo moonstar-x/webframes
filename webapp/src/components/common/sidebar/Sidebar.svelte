@@ -1,23 +1,23 @@
 <script>
   import { onDestroy } from 'svelte';
+  import { flip } from 'svelte/animate';
+  import { dndzone } from 'svelte-dnd-action';
   import SidebarItem from './SidebarItem.svelte';
   import AddSiteSidebarItem from './AddSiteSidebarItem.svelte';
   import ConfirmationModal from '../modal/ConfirmationModal.svelte';
   import EditSiteModal from '../modal/EditSiteModal.svelte';
-  import { deleteSite } from '../../../networking/sites';
+  import { deleteSite, putOrder } from '../../../networking/sites';
   import { currentSite, sites } from '../../../stores/sites';
   import { order } from '../../../stores/order';
 
   export let show = true;
 
-  let orderedSites = [];
+  let orderedSites = $order.map((id) => $sites.find((site) => site.id === id));;
   let showDeleteModal = false;
   let showEditModal = false;
   let contextSite = null;
 
-  const unsubscribeOrder = order.subscribe((value) => {
-    orderedSites = value.map((id) => $sites.find((site) => site.id === id));
-  });
+  let dragDisabled = true;
 
   const unsubscribeSites = sites.subscribe((value) => {
     orderedSites = $order.map((id) => value.find((site) => site.id === id)); 
@@ -55,8 +55,26 @@
     showEditModal = false;
   };
 
+  const handleDragConsider = (e) => {
+    orderedSites = e.detail.items;
+  };
+
+  const handleDragFinalize = (e) => {
+    orderedSites = e.detail.items;
+    return putOrder(orderedSites.map((s) => s.id))
+      .then((newOrder) => {
+        dragDisabled = true;
+        order.update(newOrder);
+      });
+  };
+
+  const startDrag = (e) => {
+    e.preventDefault();
+    dragDisabled = false;
+  };
+  const stopDrag = () => dragDisabled = true;
+
   onDestroy(() => {
-    unsubscribeOrder();
     unsubscribeSites();
   });
 </script>
@@ -89,6 +107,7 @@
     padding: 0;
     min-height: 100%;
     width: inherit;
+    outline: none !important;
   }
 
   .sidebar-hide {
@@ -97,9 +116,18 @@
 </style>
 
 <nav class:sidebar-hide={!show}>
-  <ul>
+  <ul use:dndzone={{ items: orderedSites, dragDisabled, flipDurationMs: 200 }} on:consider={handleDragConsider} on:finalize={handleDragFinalize}>
     {#each orderedSites as site (site.id)}
-      <SidebarItem active={$currentSite ? site.id === $currentSite.id : false} {site} on:siteDelete={handleSiteDelete} on:siteEdit={handleSiteEdit} />
+      <SidebarItem
+        active={$currentSite ? site.id === $currentSite.id : false}
+        {site}
+        on:siteDelete={handleSiteDelete}
+        on:siteEdit={handleSiteEdit}
+        on:mousedown={startDrag}
+        on:touchstart={startDrag}
+        on:mouseup={stopDrag}
+        on:touchend={stopDrag}
+      />
     {/each}
     <AddSiteSidebarItem />
   </ul>
