@@ -5,6 +5,7 @@
   import { getImageWithInitials } from '../../../networking/imageGenerator';
   import { imageToDataURI } from '../../../utils';
   import { sites, currentSite } from '../../../stores/sites';
+  import { changePageTitle } from '../../../utils';
 
   const dispatch = createEventDispatcher();
 
@@ -57,6 +58,7 @@
 
       if ($currentSite?.id === site.id) {
         currentSite.update(updatedSite);
+        changePageTitle(updatedSite.name);
       }
 
       dispatch('success');

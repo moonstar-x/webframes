@@ -51,8 +51,8 @@
       const siteImage = image || await getImageWithInitials(name);
       const newSite = await postSite({ name, url, image: siteImage });
 
-      sites.add(newSite);
       order.add(newSite.id);
+      sites.add(newSite);
       dispatch('success');
     } catch (err) {
       if (err.endsWith('uri')) {

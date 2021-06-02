@@ -1,6 +1,5 @@
 <script>
   import { onDestroy } from 'svelte';
-  import { flip } from 'svelte/animate';
   import { dndzone } from 'svelte-dnd-action';
   import SidebarItem from './SidebarItem.svelte';
   import AddSiteSidebarItem from './AddSiteSidebarItem.svelte';
@@ -9,6 +8,7 @@
   import { deleteSite, putOrder } from '../../../networking/sites';
   import { currentSite, sites } from '../../../stores/sites';
   import { order } from '../../../stores/order';
+  import { changePageTitle } from '../../../utils';
 
   export let show = true;
 
@@ -36,11 +36,12 @@
   const handleDeleteConfirm = () => {
     return deleteSite(contextSite.id)
       .then((deleted) => {
-        sites.delete((site) => site.id !== deleted.id);
         order.delete((id) => id !== deleted.id);
+        sites.delete((site) => site.id !== deleted.id);
 
         if ($currentSite?.id === deleted.id) {
           currentSite.update(null);
+          changePageTitle();
         }
 
         showDeleteModal = false;

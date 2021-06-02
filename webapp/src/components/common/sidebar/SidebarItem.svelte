@@ -2,6 +2,7 @@
   import { createEventDispatcher } from 'svelte';
   import { currentSite } from '../../../stores/sites';
   import { contextMenuData } from '../../../stores/contextMenu';
+  import { changePageTitle } from '../../../utils';
 
   const dispatch = createEventDispatcher();
 
@@ -27,6 +28,7 @@
 
   const handleClick = () => {
     currentSite.update(site);
+    changePageTitle(site.name);
   };
 
   const handleItemHover = (e) => {
