@@ -2,18 +2,20 @@
   import { onDestroy } from 'svelte';
   import SidebarItem from './SidebarItem.svelte';
   import AddSiteSidebarItem from './AddSiteSidebarItem.svelte';
+  import ConfirmationModal from '../modal/ConfirmationModal.svelte';
   import { currentSite, sites } from '../../../stores/sites';
   import { order } from '../../../stores/order';
   import { contextMenuData } from '../../../stores/contextMenu';
 
-  const contextMenuItems = [
-    { text: 'Edit site', danger: false, onClick: () => console.log('EDIT') },
-    { text: 'Delete site', danger: true, onClick: () => console.log('DELETE') }
-  ];
-
   export let show = true;
 
+  let showDeleteModal = false;
   let orderedSites = [];
+
+  const contextMenuItems = [
+    { text: 'Edit site', danger: false, onClick: () => console.log('EDIT') },
+    { text: 'Delete site', danger: true, onClick: () => showDeleteModal = true }
+  ];
 
   const unsubscribeOrder = order.subscribe((value) => {
     orderedSites = value.map((id) => $sites.find((site) => site.id === id));
@@ -25,6 +27,15 @@
     contextMenuData.setOptions(contextMenuItems);
     contextMenuData.setCoords(e.clientX, e.clientY);
     contextMenuData.setVisibility(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    console.log('de')
+    showDeleteModal = false;
+  };
+
+  const handleDeleteCancel = () => {
+    showDeleteModal = false;
   };
 
   onDestroy(() => {
@@ -75,3 +86,4 @@
     <AddSiteSidebarItem />
   </ul>
 </nav>
+<ConfirmationModal show={showDeleteModal} on:confirm={handleDeleteConfirm} on:cancel={handleDeleteCancel} />

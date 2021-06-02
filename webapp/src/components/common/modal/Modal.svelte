@@ -33,7 +33,9 @@
     padding: 0;
     border: 1px solid #888;
     border-radius: 10px;
-    width: 80%;
+    width: fit-content;
+    min-width: 20%;
+    max-width: 80%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 
