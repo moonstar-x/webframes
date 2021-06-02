@@ -2,19 +2,57 @@
   import { onDestroy } from 'svelte';
   import SidebarItem from './SidebarItem.svelte';
   import AddSiteSidebarItem from './AddSiteSidebarItem.svelte';
+  import ConfirmationModal from '../modal/ConfirmationModal.svelte';
+  import EditSiteModal from '../modal/EditSiteModal.svelte';
+  import { deleteSite } from '../../../networking/sites';
   import { currentSite, sites } from '../../../stores/sites';
   import { order } from '../../../stores/order';
 
+  export let show = true;
+
   let orderedSites = [];
+  let showDeleteModal = false;
+  let showEditModal = false;
+  let contextSite = null;
 
   const unsubscribeOrder = order.subscribe((value) => {
     orderedSites = value.map((id) => $sites.find((site) => site.id === id));
   });
 
-  export let show = true;
+  const unsubscribeSites = sites.subscribe((value) => {
+    orderedSites = $order.map((id) => value.find((site) => site.id === id)); 
+  });
+
+  const handleSiteDelete = (e) => {
+    showDeleteModal = true;
+    contextSite = e.detail;
+  };
+
+  const handleSiteEdit = (e) => {
+    showEditModal = true;
+    contextSite = e.detail;
+  };
+
+  const handleDeleteConfirm = () => {
+    return deleteSite(contextSite.id)
+      .then((deleted) => {
+        sites.delete((site) => site.id !== deleted.id);
+        order.delete((id) => id !== deleted.id);
+        showDeleteModal = false;
+      });
+  };
+
+  const handleDeleteCancel = () => {
+    showDeleteModal = false;
+  };
+
+  const handleEditClose = () => {
+    showEditModal = false;
+  };
 
   onDestroy(() => {
     unsubscribeOrder();
+    unsubscribeSites();
   });
 </script>
 
@@ -56,8 +94,10 @@
 <nav class:sidebar-hide={!show}>
   <ul>
     {#each orderedSites as site (site.id)}
-      <SidebarItem active={$currentSite ? site.id === $currentSite.id : false} {site} />
+      <SidebarItem active={$currentSite ? site.id === $currentSite.id : false} {site} on:siteDelete={handleSiteDelete} on:siteEdit={handleSiteEdit} />
     {/each}
     <AddSiteSidebarItem />
   </ul>
 </nav>
+<ConfirmationModal show={showDeleteModal} on:confirm={handleDeleteConfirm} on:cancel={handleDeleteCancel} />
+<EditSiteModal show={showEditModal} site={contextSite} on:close={handleEditClose} />

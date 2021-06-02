@@ -1,30 +1,38 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import ErrorAlert from '../alert/ErrorAlert.svelte';
-  import { postSite } from '../../../networking/sites';
+  import { patchSite } from '../../../networking/sites';
   import { getImageWithInitials } from '../../../networking/imageGenerator';
   import { imageToDataURI } from '../../../utils';
   import { sites } from '../../../stores/sites';
-  import { order } from '../../../stores/order';
 
   const dispatch = createEventDispatcher();
+
+  export let site;
 
   let error = '';
 
   let name = '';
   let url = '';
-  let image = null;
+  let image = site.image;
+  let shouldEditImage = false;
 
-  let nameInvalid = false;
   let urlInvalid = false;
 
   const clearError = () => {
-    nameInvalid = false;
     urlInvalid = false;
     error = '';
   };
 
+  const handleImageDelete = (e) => {
+    e.preventDefault();
+
+    image = null;
+    shouldEditImage = true;
+  };
+
   const handleImagePick = (e) => {
+    shouldEditImage = true;
     const file = e.target.files[0];
     return imageToDataURI(file)
       .then((uri) => {
@@ -35,24 +43,17 @@
   const handleSubmit = async(e) => {
     e.preventDefault();
 
-    if (!name) {
-      error = 'Name is required!';
-      nameInvalid = true;
-      return;
-    }
-
-    if (!url) {
-      error = 'URL is required!';
-      urlInvalid = true;
-      return;
-    }
+    const newSite = {};
+    if (name) newSite.name = name;
+    if (url) newSite.url = url;
 
     try {
-      const siteImage = image || await getImageWithInitials(name);
-      const newSite = await postSite({ name, url, image: siteImage });
-
-      sites.add(newSite);
-      order.add(newSite.id);
+      if (shouldEditImage) {
+        newSite.image = image || await getImageWithInitials(newSite.name || site.name);
+      }
+      
+      const updatedSite = await patchSite(site.id, newSite);
+      sites.replace((old) => old.id === site.id, updatedSite);
       dispatch('success');
     } catch (err) {
       if (err.endsWith('uri')) {
@@ -74,16 +75,10 @@
     width: 70vw;
   }
 
-  label {
+  label, button.button {
     display: block;
     width: 100%;
     margin-bottom: 0.3rem;
-  }
-
-  .required label::after {
-    content: '*';
-    color: red;
-    margin-left: 0.25rem;
   }
 
   input {
@@ -137,13 +132,25 @@
     margin-bottom: 1rem;
     cursor: pointer;
     border: 2px solid var(--bg-dark);
-    margin: 0;
+    margin: 1rem 0;
     font-size: 1em;
   }
 
   .button:hover, .button:focus, .button:active {
     background: var(--bg-dark-accent);
     border: 2px solid var(--bg-dark);
+  }
+
+  .first-button {
+    margin-top: 0 !important;
+  }
+
+  .last-button {
+    margin-bottom: 0 !important;
+  }
+
+  input[type="submit"].button {
+    margin: 0;
   }
 
   hr {
@@ -153,7 +160,7 @@
 
   img {
     display: block;
-    margin: 1rem auto 0 auto;
+    margin: 0 auto;
     width: 100%;
     max-width: 256px;
   }
@@ -168,22 +175,23 @@
     <ErrorAlert {error} />
   {/if}
   <div class="form-section text-form">
-    <div class="form-group required">
+    <div class="form-group">
       <label for="fname">Name:</label>
-      <input class:invalid={nameInvalid} type="text" id="fname" bind:value={name} placeholder="Required" autocomplete="off" on:input={clearError} />
+      <input type="text" id="fname" bind:value={name} placeholder={site.name} autocomplete="off" on:input={clearError} />
     </div>
-    <div class="form-group required">
+    <div class="form-group">
       <label for="furl">URL:</label>
-      <input class:invalid={urlInvalid} type="text" id="furl" bind:value={url} placeholder="Required" autocomplete="off" on:input={clearError} />
+      <input class:invalid={urlInvalid} type="text" id="furl" bind:value={url} placeholder={site.url} autocomplete="off" on:input={clearError} />
     </div>
   </div>
   <div class="form-section image-form">
     <div class="form-group">
-      <label class="button" for="fimage">Upload Image</label>
+      <label class="first-button button" for="fimage">Upload Image</label>
       <input type="file" id="fimage" accept="image/*" on:change={handleImagePick} />
       {#if image}
         <img alt="preview" src={image} />
       {/if}
+      <button class="last-button button" on:click={handleImageDelete}>Delete Image</button>
     </div>
   </div>
   <hr />

@@ -3,11 +3,18 @@
 	import LoadingSpinner from './common/loadingSpinner/LoadingSpinner.svelte';
 	import RequestError from './common/requestError/RequestError.svelte';
 	import Content from './common/content/Content.svelte';
+	import ContextMenu from './common/contextMenu/ContextMenu.svelte';
 	import { getSites, getOrder } from '../networking/sites';
 	import { sites, sitesError } from '../stores/sites';
 	import { order, orderError } from '../stores/order';
+	import { contextMenuData } from '../stores/contextMenu';
 
 	let loading = true;
+
+	const handleContextMenuClose = () => {
+		contextMenuData.setVisibility(false);
+	};
+
 	onMount(() => {
 		const sitesPromise = getSites()
 			.then((fetchedSites) => {
@@ -48,3 +55,4 @@
 		<Content />
 	{/if}
 </main>
+<ContextMenu show={$contextMenuData.visible} options={$contextMenuData.options} posX={$contextMenuData.posX} posY={$contextMenuData.posY} on:close={handleContextMenuClose} />
