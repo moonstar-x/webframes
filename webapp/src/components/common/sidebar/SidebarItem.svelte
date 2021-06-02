@@ -7,7 +7,7 @@
 
   const handleClick = () => {
     currentSite.update(site);
-  }
+  };
 </script>
 
 <style>
@@ -102,7 +102,7 @@
 </style>
 
 {#if !extra}
-  <li class:active on:click={handleClick}>
+  <li class:active on:click={handleClick} on:contextmenu>
     {#if site.image}
       <img alt={site.name} src={site.image} />
     {/if}

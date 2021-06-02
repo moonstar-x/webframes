@@ -4,6 +4,14 @@
   import AddSiteSidebarItem from './AddSiteSidebarItem.svelte';
   import { currentSite, sites } from '../../../stores/sites';
   import { order } from '../../../stores/order';
+  import { contextMenuData } from '../../../stores/contextMenu';
+
+  const contextMenuItems = [
+    { text: 'Edit site', danger: false, onClick: () => console.log('EDIT') },
+    { text: 'Delete site', danger: true, onClick: () => console.log('DELETE') }
+  ];
+
+  export let show = true;
 
   let orderedSites = [];
 
@@ -11,7 +19,13 @@
     orderedSites = value.map((id) => $sites.find((site) => site.id === id));
   });
 
-  export let show = true;
+  const handleContextMenuOpen = (e) => {
+    e.preventDefault();
+
+    contextMenuData.setOptions(contextMenuItems);
+    contextMenuData.setCoords(e.clientX, e.clientY);
+    contextMenuData.setVisibility(true);
+  };
 
   onDestroy(() => {
     unsubscribeOrder();
@@ -56,7 +70,7 @@
 <nav class:sidebar-hide={!show}>
   <ul>
     {#each orderedSites as site (site.id)}
-      <SidebarItem active={$currentSite ? site.id === $currentSite.id : false} {site} />
+      <SidebarItem active={$currentSite ? site.id === $currentSite.id : false} {site} on:contextmenu={handleContextMenuOpen} />
     {/each}
     <AddSiteSidebarItem />
   </ul>
