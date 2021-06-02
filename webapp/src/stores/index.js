@@ -15,6 +15,7 @@ export const createArrayStore = (initial) => {
   return {
     subscribe,
     update: (data) => set(data),
-    add: (data) => storeUpdate((old) => [...old, data])
+    add: (data) => storeUpdate((old) => [...old, data]),
+    delete: (filter) => storeUpdate((old) => old.filter(filter))
   };
 };
