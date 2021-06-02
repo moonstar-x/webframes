@@ -139,9 +139,9 @@
     </div>
   </li>
 {:else}
-  <li class:extra on:click>
+  <li class:extra on:click on:mouseover={handleItemHover}>
     <slot />
-    <div class="popper">
+    <div class="popper" style="top: {popperY}px; left: {popperX}px">
       <h4 class="popper-text">{site.name}</h4>
     </div>
   </li>
