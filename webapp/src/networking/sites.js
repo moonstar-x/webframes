@@ -29,3 +29,11 @@ export const postSite = (site) => {
       throw error.response?.data.error || error.response?.data.message || error.message;
     });
 };
+
+export const deleteSite = (id) => {
+  return axios.delete(`${endpoint('/sites')}/${id}`)
+    .then((response) => response.data.data)
+    .catch((error) => {
+      throw error.response?.data.error || error.response?.data.message || error.message;
+    });
+};
