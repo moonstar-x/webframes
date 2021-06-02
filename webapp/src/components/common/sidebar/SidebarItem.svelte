@@ -1,5 +1,9 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
   import { currentSite } from '../../../stores/sites';
+  import { contextMenuData } from '../../../stores/contextMenu';
+
+  const dispatch = createEventDispatcher();
 
   export let site;
   export let active = false;
@@ -7,6 +11,19 @@
 
   let popperX = -1;
   let popperY = -1;
+
+  const contextMenuItems = [
+    { text: 'Edit site', danger: false, onClick: () => dispatch('siteEdit', site) },
+    { text: 'Delete site', danger: true, onClick: () => dispatch('siteDelete', site)}
+  ];
+
+  const handleContextMenuOpen = (e) => {
+    e.preventDefault();
+
+    contextMenuData.setOptions(contextMenuItems);
+    contextMenuData.setCoords(e.clientX, e.clientY);
+    contextMenuData.setVisibility(true);
+  };
 
   const handleClick = () => {
     currentSite.update(site);
@@ -112,7 +129,7 @@
 </style>
 
 {#if !extra}
-  <li class:active on:click={handleClick} on:contextmenu on:mouseover={handleItemHover}>
+  <li class:active on:click={handleClick} on:contextmenu={handleContextMenuOpen} on:mouseover={handleItemHover}>
     {#if site.image}
       <img alt={site.name} src={site.image} />
     {/if}

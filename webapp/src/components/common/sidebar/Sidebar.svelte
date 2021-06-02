@@ -3,35 +3,32 @@
   import SidebarItem from './SidebarItem.svelte';
   import AddSiteSidebarItem from './AddSiteSidebarItem.svelte';
   import ConfirmationModal from '../modal/ConfirmationModal.svelte';
+  import { deleteSite } from '../../../networking/sites';
   import { currentSite, sites } from '../../../stores/sites';
   import { order } from '../../../stores/order';
-  import { contextMenuData } from '../../../stores/contextMenu';
 
   export let show = true;
 
-  let showDeleteModal = false;
   let orderedSites = [];
-
-  const contextMenuItems = [
-    { text: 'Edit site', danger: false, onClick: () => console.log('EDIT') },
-    { text: 'Delete site', danger: true, onClick: () => showDeleteModal = true }
-  ];
+  let showDeleteModal = false;
+  let contextSite = null;
 
   const unsubscribeOrder = order.subscribe((value) => {
     orderedSites = value.map((id) => $sites.find((site) => site.id === id));
   });
 
-  const handleContextMenuOpen = (e) => {
-    e.preventDefault();
-
-    contextMenuData.setOptions(contextMenuItems);
-    contextMenuData.setCoords(e.clientX, e.clientY);
-    contextMenuData.setVisibility(true);
+  const handleSiteDelete = (e) => {
+    showDeleteModal = true;
+    contextSite = e.detail;
   };
 
   const handleDeleteConfirm = () => {
-    console.log('de')
-    showDeleteModal = false;
+    return deleteSite(contextSite.id)
+      .then((deleted) => {
+        sites.delete((site) => site.id !== deleted.id);
+        order.delete((id) => id !== deleted.id);
+        showDeleteModal = false;
+      });
   };
 
   const handleDeleteCancel = () => {
@@ -81,7 +78,7 @@
 <nav class:sidebar-hide={!show}>
   <ul>
     {#each orderedSites as site (site.id)}
-      <SidebarItem active={$currentSite ? site.id === $currentSite.id : false} {site} on:contextmenu={handleContextMenuOpen} />
+      <SidebarItem active={$currentSite ? site.id === $currentSite.id : false} {site} on:siteDelete={handleSiteDelete} />
     {/each}
     <AddSiteSidebarItem />
   </ul>
