@@ -14,14 +14,6 @@ export const getSites = () => {
     });
 };
 
-export const getOrder = () => {
-  return axios.get(endpoint('/sites/order'))
-    .then((response) => response.data.data)
-    .catch((error) => {
-      throw error.response?.data.error || error.response?.data.message || error.message;
-    });
-};
-
 export const postSite = (site) => {
   return axios.post(endpoint('/sites'), site)
     .then((response) => response.data.data)
@@ -40,6 +32,22 @@ export const deleteSite = (id) => {
 
 export const patchSite = (id, newSite) => {
   return axios.patch(`${endpoint('/sites')}/${id}`, newSite)
+    .then((response) => response.data.data)
+    .catch((error) => {
+      throw error.response?.data.error || error.response?.data.message || error.message;
+    });
+};
+
+export const getOrder = () => {
+  return axios.get(endpoint('/sites/order'))
+    .then((response) => response.data.data)
+    .catch((error) => {
+      throw error.response?.data.error || error.response?.data.message || error.message;
+    });
+};
+
+export const putOrder = (newOrder) => {
+  return axios.put(endpoint('/sites/order'), newOrder)
     .then((response) => response.data.data)
     .catch((error) => {
       throw error.response?.data.error || error.response?.data.message || error.message;
