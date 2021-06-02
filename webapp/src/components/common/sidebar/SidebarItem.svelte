@@ -14,7 +14,7 @@
 
   const contextMenuItems = [
     { text: 'Edit site', danger: false, onClick: () => dispatch('siteEdit', site) },
-    { text: 'Delete site', danger: true, onClick: () => dispatch('siteDelete', site)}
+    { text: 'Delete site', danger: true, onClick: () => dispatch('siteDelete', site) }
   ];
 
   const handleContextMenuOpen = (e) => {

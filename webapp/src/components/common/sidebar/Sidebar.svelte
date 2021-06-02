@@ -3,6 +3,7 @@
   import SidebarItem from './SidebarItem.svelte';
   import AddSiteSidebarItem from './AddSiteSidebarItem.svelte';
   import ConfirmationModal from '../modal/ConfirmationModal.svelte';
+  import EditSiteModal from '../modal/EditSiteModal.svelte';
   import { deleteSite } from '../../../networking/sites';
   import { currentSite, sites } from '../../../stores/sites';
   import { order } from '../../../stores/order';
@@ -11,14 +12,24 @@
 
   let orderedSites = [];
   let showDeleteModal = false;
+  let showEditModal = false;
   let contextSite = null;
 
   const unsubscribeOrder = order.subscribe((value) => {
     orderedSites = value.map((id) => $sites.find((site) => site.id === id));
   });
 
+  const unsubscribeSites = sites.subscribe((value) => {
+    orderedSites = $order.map((id) => value.find((site) => site.id === id)); 
+  });
+
   const handleSiteDelete = (e) => {
     showDeleteModal = true;
+    contextSite = e.detail;
+  };
+
+  const handleSiteEdit = (e) => {
+    showEditModal = true;
     contextSite = e.detail;
   };
 
@@ -35,8 +46,13 @@
     showDeleteModal = false;
   };
 
+  const handleEditClose = () => {
+    showEditModal = false;
+  };
+
   onDestroy(() => {
     unsubscribeOrder();
+    unsubscribeSites();
   });
 </script>
 
@@ -78,9 +94,10 @@
 <nav class:sidebar-hide={!show}>
   <ul>
     {#each orderedSites as site (site.id)}
-      <SidebarItem active={$currentSite ? site.id === $currentSite.id : false} {site} on:siteDelete={handleSiteDelete} />
+      <SidebarItem active={$currentSite ? site.id === $currentSite.id : false} {site} on:siteDelete={handleSiteDelete} on:siteEdit={handleSiteEdit} />
     {/each}
     <AddSiteSidebarItem />
   </ul>
 </nav>
 <ConfirmationModal show={showDeleteModal} on:confirm={handleDeleteConfirm} on:cancel={handleDeleteCancel} />
+<EditSiteModal show={showEditModal} site={contextSite} on:close={handleEditClose} />
