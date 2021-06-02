@@ -37,3 +37,11 @@ export const deleteSite = (id) => {
       throw error.response?.data.error || error.response?.data.message || error.message;
     });
 };
+
+export const patchSite = (id, newSite) => {
+  return axios.patch(`${endpoint('/sites')}/${id}`, newSite)
+    .then((response) => response.data.data)
+    .catch((error) => {
+      throw error.response?.data.error || error.response?.data.message || error.message;
+    });
+};
