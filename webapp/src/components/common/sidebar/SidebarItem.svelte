@@ -5,8 +5,17 @@
   export let active = false;
   export let extra = false;
 
+  let popperX = -1;
+  let popperY = -1;
+
   const handleClick = () => {
     currentSite.update(site);
+  };
+
+  const handleItemHover = (e) => {
+    const pos = e.toElement.getBoundingClientRect();
+    popperX = pos.x + pos.width / 2 + 50;
+    popperY = pos.y + pos.height / 2;
   };
 </script>
 
@@ -56,10 +65,10 @@
   }
 
   .popper {
-    position: absolute;
+    position: fixed;
     width: max-content;
-    top: 50%;
-    left: 155%;
+    top: 20px;
+    left: 100px;
     border-radius: 4px;
     padding: 0.68rem 1rem;
     opacity: 0;
@@ -68,6 +77,7 @@
     transform: translateY(-50%) scale(0.98);
     transform-origin: left;
     transform: opacity 64ms, transform-origin 128ms;
+    z-index: 1;
   }
 
   .popper::before {
@@ -102,11 +112,11 @@
 </style>
 
 {#if !extra}
-  <li class:active on:click={handleClick} on:contextmenu>
+  <li class:active on:click={handleClick} on:contextmenu on:mouseover={handleItemHover}>
     {#if site.image}
       <img alt={site.name} src={site.image} />
     {/if}
-    <div class="popper">
+    <div class="popper" style="top: {popperY}px; left: {popperX}px">
       <h4 class="popper-text">{site.name}</h4>
       <h6 class="popper-text">{site.url}</h6>
     </div>
