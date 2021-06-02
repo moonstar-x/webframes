@@ -4,7 +4,7 @@
   import { patchSite } from '../../../networking/sites';
   import { getImageWithInitials } from '../../../networking/imageGenerator';
   import { imageToDataURI } from '../../../utils';
-  import { sites } from '../../../stores/sites';
+  import { sites, currentSite } from '../../../stores/sites';
 
   const dispatch = createEventDispatcher();
 
@@ -54,6 +54,11 @@
       
       const updatedSite = await patchSite(site.id, newSite);
       sites.replace((old) => old.id === site.id, updatedSite);
+
+      if ($currentSite?.id === site.id) {
+        currentSite.update(updatedSite);
+      }
+
       dispatch('success');
     } catch (err) {
       if (err.endsWith('uri')) {
@@ -195,5 +200,5 @@
     </div>
   </div>
   <hr />
-  <input class="button" type="submit" value="Add" />
+  <input class="button" type="submit" value="Update" />
 </form>

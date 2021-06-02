@@ -38,6 +38,11 @@
       .then((deleted) => {
         sites.delete((site) => site.id !== deleted.id);
         order.delete((id) => id !== deleted.id);
+
+        if ($currentSite?.id === deleted.id) {
+          currentSite.update(null);
+        }
+
         showDeleteModal = false;
       });
   };
