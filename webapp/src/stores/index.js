@@ -16,6 +16,14 @@ export const createArrayStore = (initial) => {
     subscribe,
     update: (data) => set(data),
     add: (data) => storeUpdate((old) => [...old, data]),
-    delete: (filter) => storeUpdate((old) => old.filter(filter))
+    delete: (filter) => storeUpdate((old) => old.filter(filter)),
+    replace: (findPredicate, newItem) => {
+      return storeUpdate((data) => {
+        const index = data.findIndex(findPredicate);
+        const first = data.slice(0, index);
+        const last = data.slice(index + 1);
+        return [...first, newItem, ...last];
+      });
+    }
   };
 };
