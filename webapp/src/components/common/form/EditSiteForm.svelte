@@ -87,7 +87,8 @@
   <div class="form-section text-form">
     <div class="form-group">
       <label class="form-label" for="fname">Name:</label>
-      <input class="form-input" type="text" id="fname" bind:value={name} placeholder={site.name} autocomplete="off" on:input={clearError} />
+      <!-- svelte-ignore a11y-autofocus -->
+      <input class="form-input" type="text" id="fname" bind:value={name} placeholder={site.name} autocomplete="off" on:input={clearError} autofocus />
     </div>
     <div class="form-group">
       <label class="form-label" for="furl">URL:</label>

@@ -73,7 +73,8 @@
   <div class="form-section text-form">
     <div class="form-group required">
       <label class="form-label" for="fname">Name:</label>
-      <input class="form-input" class:invalid={nameInvalid} type="text" id="fname" bind:value={name} placeholder="Required" autocomplete="off" on:input={clearError} />
+      <!-- svelte-ignore a11y-autofocus -->
+      <input class="form-input" class:invalid={nameInvalid} type="text" id="fname" bind:value={name} placeholder="Required" autocomplete="off" on:input={clearError} autofocus />
     </div>
     <div class="form-group required">
       <label class="form-label" for="furl">URL:</label>

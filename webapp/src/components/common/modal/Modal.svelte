@@ -7,13 +7,20 @@
     dispatch('close');
   };
 
+  const handleKeyPress = (e) => {
+    if (closeOnEscape && e.keyCode === 27) {
+      dispatch('close');
+    }
+  };
+
   export let show;
   export let id = null;
   export let withClose = true;
+  export let closeOnEscape = true;
 </script>
 
 {#if show}
-  <div {id} class="modal">
+  <div {id} class="modal" tabindex="0" on:keyup={handleKeyPress}>
     <div class="modal-content">
       <div class="modal-header">
         {#if withClose}
