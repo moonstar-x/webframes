@@ -10,9 +10,6 @@
   export let active = false;
   export let extra = false;
 
-  let popperX = -1;
-  let popperY = -1;
-
   const contextMenuItems = [
     { text: 'Edit site', danger: false, onClick: () => dispatch('siteEdit', site) },
     { text: 'Delete site', danger: true, onClick: () => dispatch('siteDelete', site) }
@@ -29,12 +26,6 @@
   const handleClick = () => {
     currentSite.update(site);
     changePageTitle(site.name);
-  };
-
-  const handleItemHover = (e) => {
-    const pos = e.toElement.getBoundingClientRect();
-    popperX = pos.x + pos.width / 2 + 50;
-    popperY = pos.y + pos.height / 2;
   };
 </script>
 
@@ -85,10 +76,10 @@
   }
 
   .popper {
-    position: fixed;
+    position: absolute;
     width: max-content;
-    top: 20px;
-    left: 100px;
+    top: 50%;
+    left: 155%;
     border-radius: 4px;
     padding: 0.68rem 1rem;
     opacity: 0;
@@ -136,19 +127,19 @@
 </style>
 
 {#if !extra}
-  <li class:active on:click={handleClick} on:contextmenu={handleContextMenuOpen} on:mouseover={handleItemHover} on:mousedown on:touchstart on:mouseup on:touchend>
+  <li class:active on:click={handleClick} on:contextmenu={handleContextMenuOpen} on:mousedown on:touchstart on:mouseup on:touchend>
     {#if site.image}
       <img alt={site.name} src={site.image} />
     {/if}
-    <div class="popper" style="top: {popperY}px; left: {popperX}px">
+    <div class="popper">
       <h4 class="popper-text">{site.name}</h4>
       <h6 class="popper-text">{site.url}</h6>
     </div>
   </li>
 {:else}
-  <li class:extra on:click on:mouseover={handleItemHover}>
+  <li class:extra on:click>
     <slot />
-    <div class="popper" style="top: {popperY}px; left: {popperX}px">
+    <div class="popper">
       <h4 class="popper-text">{site.name}</h4>
     </div>
   </li>

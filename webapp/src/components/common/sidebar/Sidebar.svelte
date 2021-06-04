@@ -79,56 +79,70 @@
 
 <style>
   nav {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     bottom: 0;
-    width: var(--sidebar-icon-size);
+    width: calc(var(--sidebar-icon-size) + calc(2 * var(--sidebar-padding)));
     padding: var(--sidebar-padding);
     background-color: var(--bg-dark);
     transition: transform var(--hide-anim-duration) ease-in-out;
-    overflow-y: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    height: 100%;
+    box-sizing: border-box;
   }
-
-  nav::-webkit-scrollbar {
-  display: none;
-}
 
   ul {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     list-style: none;
-    margin: 0;
+    margin: 1rem;
     padding: 0;
     min-height: 100%;
-    width: inherit;
+    width: min-content;
     outline: none !important;
+    box-sizing: border-box;
   }
 
   .sidebar-hide {
     transform: translateX(-100%);
   }
+  
+  .sidebar-wrapper {
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+  }
+
+  .sidebar-wrapper::-webkit-scrollbar  {
+    display: none;
+  }
 </style>
 
 <nav class:sidebar-hide={!show}>
-  <ul use:dndzone={{ items: orderedSites, dragDisabled, flipDurationMs: 200 }} on:consider={handleDragConsider} on:finalize={handleDragFinalize}>
-    {#each orderedSites as site (site.id)}
-      <SidebarItem
-        active={$currentSite ? site.id === $currentSite.id : false}
-        {site}
-        on:siteDelete={handleSiteDelete}
-        on:siteEdit={handleSiteEdit}
-        on:mousedown={startDrag}
-        on:touchstart={startDrag}
-        on:mouseup={stopDrag}
-        on:touchend={stopDrag}
-      />
-    {/each}
-    <AddSiteSidebarItem />
-  </ul>
+  <div class="sidebar-wrapper">
+    <ul use:dndzone={{ items: orderedSites, dragDisabled, flipDurationMs: 200 }} on:consider={handleDragConsider} on:finalize={handleDragFinalize}>
+      {#each orderedSites as site (site.id)}
+        <SidebarItem
+          active={$currentSite ? site.id === $currentSite.id : false}
+          {site}
+          on:siteDelete={handleSiteDelete}
+          on:siteEdit={handleSiteEdit}
+          on:mousedown={startDrag}
+          on:touchstart={startDrag}
+          on:mouseup={stopDrag}
+          on:touchend={stopDrag}
+        />
+      {/each}
+      <AddSiteSidebarItem />
+    </ul>
+  </div>
 </nav>
 <ConfirmationModal show={showDeleteModal} on:confirm={handleDeleteConfirm} on:cancel={handleDeleteCancel} />
 <EditSiteModal show={showEditModal} site={contextSite} on:close={handleEditClose} />
