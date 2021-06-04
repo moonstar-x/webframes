@@ -1,0 +1,6 @@
+{
+  "name": "webframes",
+  "version": "1.0.0",
+  "description": "A small webapp made in Svelte to frame other pages.",
+  "private": true
+}

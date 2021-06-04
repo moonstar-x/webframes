@@ -1,6 +1,5 @@
 {
   "name": "webframes-webapp",
-  "version": "1.0.0",
   "description": "Webframes webapp.",
   "private": true,
   "scripts": {
