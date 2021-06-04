@@ -1,6 +1,5 @@
 {
   "name": "webframes-backend",
-  "version": "1.0.0",
   "description": "Webframes backend.",
   "main": "src/app.js",
   "private": true,

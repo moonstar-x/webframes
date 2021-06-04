@@ -1,0 +1,11 @@
+backend/node_modules
+backend/npm-debug.log
+webapp/node_modules
+webapp/npm-debug.log
+
+.github
+.git
+backend/data
+webapp/public/build
+
+*.env
