@@ -1,5 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte';
+  import Fa from 'svelte-fa/src/fa.svelte';
+  import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
   const dispatch = createEventDispatcher();
 
@@ -24,7 +26,9 @@
     <div class="modal-content">
       <div class="modal-header">
         {#if withClose}
-          <span class="close" on:click={handleClose}>&times;</span>
+          <span class="close" on:click={handleClose}>
+            <Fa icon={faTimes} />
+          </span>
         {/if}
         <slot name="modal-header" />
       </div>
