@@ -1,13 +1,23 @@
-$text-over-dark: #fff;
-$bg-black: #000;
-$bg-dark: #444;
-$bg-dark-accent: #666;
-$bg-light-gray: #fefefe;
+/** Colors */
+$dark-blue: #073b4c;
+$blue: #118ab2;
+$light-blue: #90e0ef;
+$light-green: #06d6a0;
+$yellow: #ffd166;
+$orange: #f4a261;
+$pink: #ef476f;
+$black: #0b090a;
 
+$danger-bg: #e39695;
+$danger-text: #83282c;
+$danger-accent: #da5452;
+
+/** Sidebar */
 $sidebar-icon-size: 48px;
 $sidebar-padding: 1rem;
-$sidebar-item-bg: #5d88dd;
 
+/** Animation */
 $hide-anim-duration: 500ms;
 
+/** Breakpoints */
 $breakpoint-sm: 576px;

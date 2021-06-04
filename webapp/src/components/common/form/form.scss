@@ -31,13 +31,14 @@
     }
 
     .invalid {
-      border-color: red !important;
+      border-color: $pink !important;
     }
   }
 
   .form-label {
     display: block;
     margin-bottom: 0.3rem;
+    font-family: 'Lato', sans-serif;
   }
 
   .required {
@@ -46,7 +47,7 @@
 
       &::after {
         content: '*';
-        color: red;
+        color: $pink;
         margin-left: 0.25rem;
       }
     }
@@ -64,7 +65,7 @@
       box-sizing: border-box;
 
       &:focus {
-        border-bottom: 2px solid #000;
+        border-bottom: 2px solid $dark-blue;
         outline: none;
       }
     }
@@ -76,6 +77,7 @@
 
   .form-divider {
     margin: 0;
-    color: #000;
+    border: 0;
+    border-bottom: 1px solid $dark-blue;
   }
 }

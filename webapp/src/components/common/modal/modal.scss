@@ -13,10 +13,9 @@
     min-height: 10vh;
     max-height: 80vh;
     overflow-y: scroll;
-    background-color: $bg-dark;
     margin: 10vh auto;
     padding: 0;
-    border: 1px solid #888;
+    border: 1px solid $blue;
     border-radius: 10px;
     width: fit-content;
     min-width: 20%;
@@ -25,23 +24,24 @@
 
     .modal-header, .modal-footer {
       padding: 1rem;
-      background-color: #333;
-      color: $text-over-dark;
+      background-color: $dark-blue;
+      color: #fff;
     }
 
     .modal-header {
       border-radius: 10px 10px 0 0;
-      border-bottom: 1px solid #888;
+      border-bottom: 1px solid $blue;
+      font-family: 'Lato', sans-serif;
     }
   
     .modal-footer {
       border-radius: 0 0 10px 10px;
-      border-top: 1px solid #888;
+      border-top: 1px solid $blue;
     }
 
     .modal-body {
       padding: 1rem;
-      background: $bg-light-gray;
+      background: #fefefe;
     }
   
     .close {

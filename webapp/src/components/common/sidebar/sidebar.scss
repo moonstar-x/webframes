@@ -5,7 +5,7 @@
   bottom: 0;
   width: calc(#{$sidebar-icon-size} + calc(2 * #{$sidebar-padding}));
   padding: $sidebar-padding;
-  background-color: $bg-dark;
+  background-color: $dark-blue;
   transition: transform $hide-anim-duration ease-in-out;
   height: 100%;
   box-sizing: border-box;
@@ -15,7 +15,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
     width: 100vw;
-    height: 100vh;
+    max-height: 100vh;
     position: absolute;
     top: 0;
     left: 0;

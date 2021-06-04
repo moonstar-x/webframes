@@ -6,7 +6,7 @@
   width: $sidebar-icon-size;
   height: $sidebar-icon-size;
   border-radius: 50%;
-  background: $bg-dark-accent;
+  background: $blue;
   cursor: pointer;
   text-decoration: none;
   transition: border-radius 128ms, background 128ms;
@@ -14,7 +14,7 @@
 
   &:hover {
     border-radius: 36%;
-    background: $sidebar-item-bg;
+    background: $blue;
 
     .popper {
       opacity: 1;
@@ -29,7 +29,7 @@
     height: 100%;
     top: 50%;
     border-radius: 4px;
-    background: $text-over-dark;
+    background: #fff;
     transform: translate(-100%, -50%) scale(0);
     transition: transform 128ms;
   }
@@ -43,10 +43,11 @@
   }
 
   &.add-site-item {
-    color: $sidebar-item-bg;
+    color: $light-green;
 
     &:hover {
-      color: $text-over-dark;
+      color: #fff;
+      background-color: $light-green;
     }
   }
 
@@ -63,7 +64,7 @@
     border-radius: 4px;
     padding: 0.68rem 1rem;
     opacity: 0;
-    background: $bg-black;
+    background: $black;
     pointer-events: none;
     transform: translateY(-50%) scale(0.98);
     transform-origin: left;
@@ -78,12 +79,12 @@
       top: 50%;
       left: -2px;
       z-index: -1;
-      background: $bg-black;
+      background: $black;
       transform: translateY(-50%) rotate(45deg);
     }
 
     .popper-text {
-      color: $text-over-dark;
+      color: #fff;
       margin: 0;
     }
   }
