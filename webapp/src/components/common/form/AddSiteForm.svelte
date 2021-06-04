@@ -91,5 +91,5 @@
     </div>
   </div>
   <hr class="form-divider" />
-  <input class="form-input button" type="submit" value="Add" />
+  <input class="form-input button" type="submit" value="Add Site" />
 </form>
