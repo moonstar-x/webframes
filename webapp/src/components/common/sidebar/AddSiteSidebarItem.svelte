@@ -18,7 +18,7 @@
   <Fa icon={faPlus} />
   <div class="popper">
     <h4 class="popper-text">
-      Add site
+      Add New Site
     </h4>
   </div>
 </li>
