@@ -69,10 +69,7 @@
       });
   };
 
-  const startDrag = (e) => {
-    e.preventDefault();
-    dragDisabled = false;
-  };
+  const startDrag = () => dragDisabled = false;
   const stopDrag = () => dragDisabled = true;
 
   onDestroy(() => {
