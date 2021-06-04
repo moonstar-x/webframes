@@ -1,7 +1,7 @@
 .empty-frame {
   height: 100%;
   width: 100%;
-  background: #eee;
+  background: $light-blue;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,7 +9,7 @@
   .empty-frame-content {
     border-radius: 5px;
     background: #fff;
-    border: 1px solid #ddd;
+    border: 1px solid #888;
     max-width: 90%;
     min-width: 50%;
     margin: 1rem;
