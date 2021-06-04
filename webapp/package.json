@@ -29,6 +29,8 @@
     "svelte-dnd-action": "^0.9.8"
   },
   "dependencies": {
-    "axios": "^0.21.1"
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "axios": "^0.21.1",
+    "svelte-fa": "^2.2.0"
   }
 }

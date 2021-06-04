@@ -19,7 +19,7 @@
 	}
 </style>
 
-<Topbar text={$currentSite?.url || 'Webframes'} on:toggleSidebar={handleToggleSidebar} />
+<Topbar text={$currentSite?.url || 'Webframes'} on:toggleSidebar={handleToggleSidebar} {showSidebar} />
 <div class="content">
   <Sidebar show={showSidebar} />
   <FrameHolder title={$currentSite?.name} url={$currentSite?.url} sidebarVisible={showSidebar} />
