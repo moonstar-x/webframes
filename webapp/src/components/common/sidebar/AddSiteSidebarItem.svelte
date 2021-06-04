@@ -1,7 +1,6 @@
 <script>
   import Fa from 'svelte-fa/src/fa.svelte';
   import { faPlus } from '@fortawesome/free-solid-svg-icons';
-  import SidebarItem from './SidebarItem.svelte';
   import AddSiteModal from '../modal/AddSiteModal.svelte';
 
   let showModal = false;
@@ -15,7 +14,12 @@
   }
 </script>
 
-<SidebarItem site={{ name: 'Add site' }} extra={true} on:click={handleClick}>
+<li class="sidebar-item add-site-item" on:click={handleClick}>
   <Fa icon={faPlus} />
-</SidebarItem>
+  <div class="popper">
+    <h4 class="popper-text">
+      Add site
+    </h4>
+  </div>
+</li>
 <AddSiteModal show={showModal} on:close={handleModalClose} />

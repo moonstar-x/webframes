@@ -1,0 +1,36 @@
+.context-menu {
+  display: block;
+  background-color: black;
+  padding: 10px 0;
+  border-radius: 5px;
+  box-shadow: 2px 2px 30px lightgrey;
+  position: absolute;
+  z-index: 100;
+  margin: 0;
+
+  .context-menu-item {
+    display: block;
+    padding: 10px 30px;
+    transition: 100ms;
+    color: #666;
+
+    &:hover {
+      background-color: #eee;
+      cursor: pointer;
+    }
+
+    &.danger {
+      color: red;
+    }
+  }
+}
+
+.out-click {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  display: block;
+}

@@ -6,14 +6,6 @@
   let showSidebar = true;
 </script>
 
-<style>
-  .content {
-		position: relative;
-		width: 100%;
-		height: 100vh;
-	}
-</style>
-
 <div class="content">
   <Sidebar show={showSidebar} />
   <FrameHolder title={$currentSite?.name} url={$currentSite?.url} sidebarVisible={showSidebar} />

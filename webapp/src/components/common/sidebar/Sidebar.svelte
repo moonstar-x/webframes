@@ -77,57 +77,9 @@
   });
 </script>
 
-<style>
-  nav {
-    position: relative;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: calc(var(--sidebar-icon-size) + calc(2 * var(--sidebar-padding)));
-    padding: var(--sidebar-padding);
-    background-color: var(--bg-dark);
-    transition: transform var(--hide-anim-duration) ease-in-out;
-    height: 100%;
-    box-sizing: border-box;
-  }
-
-  ul {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    list-style: none;
-    margin: 1rem;
-    padding: 0;
-    min-height: 100%;
-    width: min-content;
-    outline: none !important;
-    box-sizing: border-box;
-  }
-
-  .sidebar-hide {
-    transform: translateX(-100%);
-  }
-  
-  .sidebar-wrapper {
-    overflow-y: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
-    box-sizing: border-box;
-  }
-
-  .sidebar-wrapper::-webkit-scrollbar  {
-    display: none;
-  }
-</style>
-
-<nav class:sidebar-hide={!show}>
+<nav class="sidebar" class:sidebar-hide={!show}>
   <div class="sidebar-wrapper">
-    <ul use:dndzone={{ items: orderedSites, dragDisabled, flipDurationMs: 200 }} on:consider={handleDragConsider} on:finalize={handleDragFinalize}>
+    <ul class="sidebar-list" use:dndzone={{ items: orderedSites, dragDisabled, flipDurationMs: 200 }} on:consider={handleDragConsider} on:finalize={handleDragFinalize}>
       {#each orderedSites as site (site.id)}
         <SidebarItem
           active={$currentSite ? site.id === $currentSite.id : false}
