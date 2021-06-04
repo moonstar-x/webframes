@@ -3,7 +3,6 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
-import css from 'rollup-plugin-css-only';
 import replace from 'rollup-plugin-replace';
 import postcss from 'rollup-plugin-postcss';
 import dotenv from 'dotenv';
