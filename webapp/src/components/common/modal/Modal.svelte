@@ -1,5 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte';
+  import Fa from 'svelte-fa/src/fa.svelte';
+  import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
   const dispatch = createEventDispatcher();
 
@@ -7,80 +9,26 @@
     dispatch('close');
   };
 
+  const handleKeyPress = (e) => {
+    if (closeOnEscape && e.keyCode === 27) {
+      dispatch('close');
+    }
+  };
+
   export let show;
   export let id = null;
   export let withClose = true;
+  export let closeOnEscape = true;
 </script>
 
-<style>
-  .modal {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    z-index: 100;
-    background-color: rgba(0, 0, 0, 0.4);
-  }
-
-  .modal-content {
-    min-height: 10vh;
-    max-height: 80vh;
-    overflow-y: scroll;
-    background-color: var(--bg-light-gray);
-    margin: 10vh auto;
-    padding: 0;
-    border: 1px solid #888;
-    border-radius: 10px;
-    width: fit-content;
-    min-width: 20%;
-    max-width: 80%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-
-  .modal-header, .modal-footer {
-    padding: 1rem;
-    background-color: #333;
-    color: var(--text-over-dark);
-  }
-
-  .modal-header {
-    border-radius: 10px 10px 0 0;
-    border-bottom: 1px solid #888;
-  }
-
-  .modal-footer {
-    border-radius: 0 0 10px 10px;
-    border-top: 1px solid #888;
-  }
-
-  .modal-body {
-    padding: 1rem;
-    background: var(--bg-light-gray);
-  }
-
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    line-height: 0.7;
-  }
-
-  .close:hover, .close:focus {
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
-  }
-</style>
-
 {#if show}
-  <div {id} class="modal">
+  <div {id} class="modal" tabindex="0" on:keyup={handleKeyPress}>
     <div class="modal-content">
       <div class="modal-header">
         {#if withClose}
-          <span class="close" on:click={handleClose}>&times;</span>
+          <span class="close" on:click={handleClose}>
+            <Fa icon={faTimes} />
+          </span>
         {/if}
         <slot name="modal-header" />
       </div>

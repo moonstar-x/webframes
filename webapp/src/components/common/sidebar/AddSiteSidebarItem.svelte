@@ -1,5 +1,6 @@
 <script>
-  import SidebarItem from './SidebarItem.svelte';
+  import Fa from 'svelte-fa/src/fa.svelte';
+  import { faPlus } from '@fortawesome/free-solid-svg-icons';
   import AddSiteModal from '../modal/AddSiteModal.svelte';
 
   let showModal = false;
@@ -13,15 +14,12 @@
   }
 </script>
 
-<style>
-  h2 {
-    font-size: 35px;
-    font-family: 'Varela Round', 'Roboto', sans-serif;
-    margin: 0;
-  }
-</style>
-
-<SidebarItem site={{ name: 'Add site' }} extra={true} on:click={handleClick}>
-  <h2>+</h2>
-</SidebarItem>
+<li class="sidebar-item add-site-item" on:click={handleClick}>
+  <Fa icon={faPlus} />
+  <div class="popper">
+    <h4 class="popper-text">
+      Add site
+    </h4>
+  </div>
+</li>
 <AddSiteModal show={showModal} on:close={handleModalClose} />

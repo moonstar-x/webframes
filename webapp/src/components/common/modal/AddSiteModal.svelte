@@ -12,15 +12,9 @@
   export let show;
 </script>
 
-<style>
-  h3 {
-    margin: 0;
-  }
-</style>
-
 <Modal {show} withClose on:close>
   <svelte:fragment slot="modal-header">
-    <h3>Add a new site</h3>
+    <h3 class="m-0">Add a new site</h3>
   </svelte:fragment>
   <svelte:fragment slot="modal-content">
     <AddSiteForm on:success={handleCloseModal} />

@@ -13,15 +13,9 @@
   export let site;
 </script>
 
-<style>
-  h3 {
-    margin: 0;
-  }
-</style>
-
 <Modal {show} withClose on:close>
   <svelte:fragment slot="modal-header">
-    <h3>Editing {site.name}</h3>
+    <h3 class="m-0">Editing {site.name}</h3>
   </svelte:fragment>
   <svelte:fragment slot="modal-content">
     <EditSiteForm {site} on:success={handleCloseModal} />

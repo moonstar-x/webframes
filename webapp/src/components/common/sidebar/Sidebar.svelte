@@ -1,6 +1,5 @@
 <script>
   import { onDestroy } from 'svelte';
-  import { flip } from 'svelte/animate';
   import { dndzone } from 'svelte-dnd-action';
   import SidebarItem from './SidebarItem.svelte';
   import AddSiteSidebarItem from './AddSiteSidebarItem.svelte';
@@ -9,6 +8,7 @@
   import { deleteSite, putOrder } from '../../../networking/sites';
   import { currentSite, sites } from '../../../stores/sites';
   import { order } from '../../../stores/order';
+  import { changePageTitle } from '../../../utils';
 
   export let show = true;
 
@@ -36,11 +36,12 @@
   const handleDeleteConfirm = () => {
     return deleteSite(contextSite.id)
       .then((deleted) => {
-        sites.delete((site) => site.id !== deleted.id);
         order.delete((id) => id !== deleted.id);
+        sites.delete((site) => site.id !== deleted.id);
 
         if ($currentSite?.id === deleted.id) {
           currentSite.update(null);
+          changePageTitle();
         }
 
         showDeleteModal = false;
@@ -68,10 +69,7 @@
       });
   };
 
-  const startDrag = (e) => {
-    e.preventDefault();
-    dragDisabled = false;
-  };
+  const startDrag = () => dragDisabled = false;
   const stopDrag = () => dragDisabled = true;
 
   onDestroy(() => {
@@ -79,58 +77,24 @@
   });
 </script>
 
-<style>
-  nav {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: var(--sidebar-icon-size);
-    padding: var(--sidebar-padding);
-    background-color: var(--bg-dark);
-    transition: transform var(--hide-anim-duration) ease-in-out;
-    overflow-y: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  nav::-webkit-scrollbar {
-  display: none;
-}
-
-  ul {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
-    width: inherit;
-    outline: none !important;
-  }
-
-  .sidebar-hide {
-    transform: translateX(-100%);
-  }
-</style>
-
-<nav class:sidebar-hide={!show}>
-  <ul use:dndzone={{ items: orderedSites, dragDisabled, flipDurationMs: 200 }} on:consider={handleDragConsider} on:finalize={handleDragFinalize}>
-    {#each orderedSites as site (site.id)}
-      <SidebarItem
-        active={$currentSite ? site.id === $currentSite.id : false}
-        {site}
-        on:siteDelete={handleSiteDelete}
-        on:siteEdit={handleSiteEdit}
-        on:mousedown={startDrag}
-        on:touchstart={startDrag}
-        on:mouseup={stopDrag}
-        on:touchend={stopDrag}
-      />
-    {/each}
-    <AddSiteSidebarItem />
-  </ul>
+<nav class="sidebar" class:sidebar-hide={!show}>
+  <div class="sidebar-wrapper">
+    <ul class="sidebar-list" use:dndzone={{ items: orderedSites, dragDisabled, flipDurationMs: 200 }} on:consider={handleDragConsider} on:finalize={handleDragFinalize}>
+      {#each orderedSites as site (site.id)}
+        <SidebarItem
+          active={$currentSite ? site.id === $currentSite.id : false}
+          {site}
+          on:siteDelete={handleSiteDelete}
+          on:siteEdit={handleSiteEdit}
+          on:mousedown={startDrag}
+          on:touchstart={startDrag}
+          on:mouseup={stopDrag}
+          on:touchend={stopDrag}
+        />
+      {/each}
+      <AddSiteSidebarItem />
+    </ul>
+  </div>
 </nav>
 <ConfirmationModal show={showDeleteModal} on:confirm={handleDeleteConfirm} on:cancel={handleDeleteCancel} />
 <EditSiteModal show={showEditModal} site={contextSite} on:close={handleEditClose} />

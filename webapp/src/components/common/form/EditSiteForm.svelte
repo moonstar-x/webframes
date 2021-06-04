@@ -5,6 +5,7 @@
   import { getImageWithInitials } from '../../../networking/imageGenerator';
   import { imageToDataURI } from '../../../utils';
   import { sites, currentSite } from '../../../stores/sites';
+  import { changePageTitle } from '../../../utils';
 
   const dispatch = createEventDispatcher();
 
@@ -57,6 +58,7 @@
 
       if ($currentSite?.id === site.id) {
         currentSite.update(updatedSite);
+        changePageTitle(updatedSite.name);
       }
 
       dispatch('success');
@@ -73,132 +75,36 @@
 </script>
 
 <style>
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 70vw;
-  }
-
-  label, button.button {
-    display: block;
-    width: 100%;
-    margin-bottom: 0.3rem;
-  }
-
-  input {
-    display: block;
-    width: inherit;
-  }
-
-  input[type="text"] {
-    border: none;
-    border-bottom: 1px solid #444;
-    width: 100%;
-    font-size: 1em;
-  }
-
-  input[type="text"]:focus {
-    border-bottom: 2px solid #000;
-    outline: none;
-  }
-
-  input[type="file"] {
-    display: none;
-  }
-
-  .form-section {
-    display: flex;
-  }
-
-  .form-group {
-    flex: 1;
-  }
-
-  .text-form {
-    flex-direction: row;
-    gap: 2rem;
-  }
-
-  @media only screen and (max-width: 576px) {
-    .text-form {
-      flex-direction: column;
-      gap: 1rem;
-    }
-  }
-
   .button {
-    padding: 10px;
-    background: var(--bg-dark);
-    color: var(--text-over-dark);
-    border-radius: 5px;
-    text-align: center;
-    width: inherit;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    border: 2px solid var(--bg-dark);
     margin: 1rem 0;
-    font-size: 1em;
-  }
-
-  .button:hover, .button:focus, .button:active {
-    background: var(--bg-dark-accent);
-    border: 2px solid var(--bg-dark);
-  }
-
-  .first-button {
-    margin-top: 0 !important;
-  }
-
-  .last-button {
-    margin-bottom: 0 !important;
-  }
-
-  input[type="submit"].button {
-    margin: 0;
-  }
-
-  hr {
-    margin: 0;
-    color: #000;
-  }
-
-  img {
-    display: block;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 256px;
-  }
-
-  .invalid {
-    border-color: red !important;
   }
 </style>
 
-<form on:submit={handleSubmit}>
+<form class="form" on:submit={handleSubmit}>
   {#if error}
     <ErrorAlert {error} />
   {/if}
   <div class="form-section text-form">
     <div class="form-group">
-      <label for="fname">Name:</label>
-      <input type="text" id="fname" bind:value={name} placeholder={site.name} autocomplete="off" on:input={clearError} />
+      <label class="form-label" for="fname">Name:</label>
+      <!-- svelte-ignore a11y-autofocus -->
+      <input class="form-input" type="text" id="fname" bind:value={name} placeholder={site.name} autocomplete="off" on:input={clearError} autofocus />
     </div>
     <div class="form-group">
-      <label for="furl">URL:</label>
-      <input class:invalid={urlInvalid} type="text" id="furl" bind:value={url} placeholder={site.url} autocomplete="off" on:input={clearError} />
+      <label class="form-label" for="furl">URL:</label>
+      <input class="form-input" class:invalid={urlInvalid} type="text" id="furl" bind:value={url} placeholder={site.url} autocomplete="off" on:input={clearError} />
     </div>
   </div>
   <div class="form-section image-form">
     <div class="form-group">
-      <label class="first-button button" for="fimage">Upload Image</label>
-      <input type="file" id="fimage" accept="image/*" on:change={handleImagePick} />
+      <label class="form-label mt-0 button" for="fimage">Upload Image</label>
+      <input class="form-input" type="file" id="fimage" accept="image/*" on:change={handleImagePick} />
       {#if image}
         <img alt="preview" src={image} />
       {/if}
-      <button class="last-button button" on:click={handleImageDelete}>Delete Image</button>
+      <button class="mb-0 button w-100" on:click={handleImageDelete}>Delete Image</button>
     </div>
   </div>
-  <hr />
-  <input class="button" type="submit" value="Update" />
+  <hr class="form-divider" />
+  <input class="form-input button m-0" type="submit" value="Update Site" />
 </form>

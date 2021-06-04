@@ -24,51 +24,11 @@
   };
 </script>
 
-<style>
-  ul {
-    display: block;
-    background-color: black;
-    padding: 10px 0;
-    border-radius: 5px;
-    box-shadow: 2px 2px 30px lightgrey;
-    position: absolute;
-    z-index: 100;
-    margin: 0;
-  }
-
-  li {
-    display: block;
-    padding: 10px 30px;
-    transition: 100ms;
-    color: #666;
-  }
-
-  li:hover {
-    background-color: #eee;
-    cursor: pointer;
-  }
-
-  .out-click {
-    height: 100vh;
-    width: 100vw;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99;
-    display: block;
-  }
-
-  .danger {
-    color: red;
-  }
-</style>
-
 {#if show && options.length > 1}
-  <ul {style} out:fade={{ duration: 150 }}>
+  <ul class="context-menu" {style} out:fade={{ duration: 150 }}>
     {#each options as item}
-      <li class:danger={item.danger} on:click={handleItemClick.bind(null, item.onClick)}>{item.text}</li>
+      <li class="context-menu-item" class:danger={item.danger} on:click={handleItemClick.bind(null, item.onClick)}>{item.text}</li>
     {/each}
   </ul>
   <div class="out-click" on:click={handleOutClick} />
 {/if}
-

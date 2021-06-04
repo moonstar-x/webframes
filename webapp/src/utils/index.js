@@ -12,3 +12,7 @@ export const imageToDataURI = (image) => {
     };
   });
 };
+
+export const changePageTitle = (extra) => {
+  document.title = extra ? `Webframes | ${extra}` : 'Webframes';
+};

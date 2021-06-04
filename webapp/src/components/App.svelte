@@ -39,13 +39,6 @@
 	});
 </script>
 
-<style>
-	main {
-		height: 100%;
-		width: 100%;
-	}
-</style>
-
 <main>
 	{#if loading}
 		<LoadingSpinner />

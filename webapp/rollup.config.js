@@ -3,8 +3,8 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
-import css from 'rollup-plugin-css-only';
 import replace from 'rollup-plugin-replace';
+import postcss from 'rollup-plugin-postcss';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -55,9 +55,10 @@ export default {
         dev: !production
       }
     }),
-    // we'll extract any component CSS out into
-    // a separate file - better for performance
-    css({ output: 'bundle.css' }),
+    postcss({
+      extract: 'bundle.css',
+      minimize: production
+    }),
 
     // If you have external dependencies installed from
     // npm, you'll most likely need these plugins. In
