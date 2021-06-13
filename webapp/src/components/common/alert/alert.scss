@@ -8,4 +8,10 @@
     background-color: $danger-bg;
     border-color: $danger-accent;
   }
+
+  &.info {
+    color: $info-text;
+    background-color: $info-bg;
+    border-color: $info-accent;
+  }
 }
