@@ -24,9 +24,10 @@ export const processFrameURL = (url) => {
     return url;
   }
 
-  const protocol = url.substring(0, url.indexOf('://') + 3);
+  const protocolIndex = url.indexOf('://');
+  const protocol = url.substring(0, protocolIndex + 3);
   const portIndex = url.lastIndexOf(':');
-  const port = portIndex > -1 ? url.substring(portIndex) : '';
+  const port = portIndex > -1 && portIndex !== protocolIndex ? url.substring(portIndex) : '';
 
   return `${protocol}${window.location.hostname}${port}`;
 };
