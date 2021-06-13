@@ -3,7 +3,7 @@
 </script>
 
 {#if error}
-  <div class="alert">
+  <div class="alert danger">
     {error}
   </div>
 {/if}
