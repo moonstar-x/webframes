@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import ErrorAlert from '../alert/ErrorAlert.svelte';
+  import InfoAlert from '../alert/InfoAlert.svelte';
   import { patchSite } from '../../../networking/sites';
   import { getImageWithInitials } from '../../../networking/imageGenerator';
   import { imageToDataURI } from '../../../utils';
@@ -84,6 +85,9 @@
   {#if error}
     <ErrorAlert {error} />
   {/if}
+  <InfoAlert>
+    You can add <strong>http(s)://*</strong> into the URL field to frame a service hosted on the same domain as this website.
+  </InfoAlert>
   <div class="form-section text-form">
     <div class="form-group">
       <label class="form-label" for="fname">Name:</label>
