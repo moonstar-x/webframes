@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const endpoint = (route) => {
-  const url = API_URL || `http://${window.location.host}/api`;
+  const url = API_URL || `${window.location.origin}/api`;
   return `${url}${route}`;
 };
 
