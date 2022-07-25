@@ -1,12 +1,6 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
   import Modal from './Modal.svelte';
-
-  const dispatch = createEventDispatcher();
-
-  const handleCloseModal = () => {
-    dispatch('close');
-  };
+  import MultiFramingForm from '../form/MultiFramingForm.svelte';
 
   export let show;
 </script>
@@ -16,6 +10,6 @@
     <h3 class="m-0">Frame multiple sites</h3>
   </svelte:fragment>
   <svelte:fragment slot="modal-content">
-    hi
+    <MultiFramingForm />
   </svelte:fragment>
 </Modal>
