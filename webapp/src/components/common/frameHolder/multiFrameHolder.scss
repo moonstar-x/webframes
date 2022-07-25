@@ -1,0 +1,166 @@
+.frame-holder {
+
+  .multi-frame-parent {
+    height: 100%;
+    position: relative;
+
+    .multi-frame-child {
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: calc(100vw * (9/16));
+    }
+
+    &:not(:empty) {
+      min-height: 100vh;
+    }
+
+     // Mobile
+     &[data-size="1"] {
+      @include add-frame-layout(0, 100%, 100%, 0, 0);
+    }
+
+    &[data-size="2"] {
+      @include add-frame-layout(0, 100%, 50%, 0, 0);
+      @include add-frame-layout(1, 100%, 50%, 0, 50%);
+    }
+
+    &[data-size="3"] {
+      @include add-frame-layout(0, 100%, 33.3%, 0, 0);
+      @include add-frame-layout(1, 100%, 33.3%, 0, 33.3%);
+      @include add-frame-layout(2, 100%, 33.4%, 0, 66.6%);
+    }
+
+    &[data-size="4"] {
+      @include add-frame-layout(0, 100%, 25%, 0, 0);
+      @include add-frame-layout(1, 100%, 25%, 0, 25%);
+      @include add-frame-layout(2, 100%, 25%, 0, 50%);
+      @include add-frame-layout(3, 100%, 25%, 0, 75%);
+    }
+
+    &[data-size="5"] {
+      @include add-frame-layout(0, 50%, 33.3%, 0, 0);
+      @include add-frame-layout(1, 50%, 33.3%, 50%, 0);
+      @include add-frame-layout(2, 50%, 33.3%, 0, 33.3%);
+      @include add-frame-layout(3, 50%, 33.3%, 50%, 33.3%);
+      @include add-frame-layout(4, 100%, 33.4%, 0, 66.6%);
+    }
+
+    &[data-size="6"] {
+      @include add-frame-layout(0, 50%, 33.3%, 0, 0);
+      @include add-frame-layout(1, 50%, 33.3%, 50%, 0);
+      @include add-frame-layout(2, 50%, 33.3%, 0, 33.3%);
+      @include add-frame-layout(3, 50%, 33.3%, 50%, 33.4%);
+      @include add-frame-layout(4, 50%, 33.4%, 0, 66.6%);
+      @include add-frame-layout(5, 50%, 33.4%, 50%, 66.6%);
+    }
+
+    &[data-size="7"] {
+      @include add-frame-layout(0, 50%, 33.3%, 0, 0);
+      @include add-frame-layout(1, 50%, 33.3%, 50%, 0);
+      @include add-frame-layout(2, 50%, 33.3%, 0, 33.3%);
+      @include add-frame-layout(3, 50%, 33.3%, 50%, 33.3%);
+      @include add-frame-layout(4, 33.3%, 33.4%, 0, 66.6%);
+      @include add-frame-layout(5, 33.3%, 33.4%, 33.3%, 66.6%);
+      @include add-frame-layout(6, 33.3%, 33.4%, 66.6%, 66.6%);
+    }
+
+    &[data-size="8"] {
+      @include add-frame-layout(0, 50%, 33.3%, 0, 0);
+      @include add-frame-layout(1, 50%, 33.3%, 50%, 0);
+      @include add-frame-layout(2, 33.3%, 33.3%, 0%, 33.3%);
+      @include add-frame-layout(3, 33.3%, 33.3%, 33.3%, 33.3%);
+      @include add-frame-layout(4, 33.4%, 33.3%, 66.6%, 33.3%);
+      @include add-frame-layout(5, 33.3%, 33.4%, 0, 66.6%);
+      @include add-frame-layout(6, 33.3%, 33.4%, 33.3%, 66.6%);
+      @include add-frame-layout(7, 33.4%, 33.4%, 66.6%, 66.6%);
+    }
+
+    &[data-size="9"] {
+      @include add-frame-layout(0, 33.3%, 33.3%, 0, 0);
+      @include add-frame-layout(1, 33.3%, 33.3%, 33.3%, 0);
+      @include add-frame-layout(2, 33.4%, 33.4%, 66.6%, 0);
+      @include add-frame-layout(3, 33.3%, 33.3%, 0, 33.3%);
+      @include add-frame-layout(4, 33.3%, 33.3%, 33.3%, 33.3%);
+      @include add-frame-layout(5, 33.4%, 33.4%, 66.6%, 33.3%);
+      @include add-frame-layout(6, 33.3%, 33.3%, 0, 66.6%);
+      @include add-frame-layout(7, 33.3%, 33.3%, 33.3%, 66.6%);
+      @include add-frame-layout(8, 33.4%, 33.4%, 66.6%, 66.6%);
+    }
+
+    // Desktop
+    @media(min-width: $breakpoint-lg) {
+      &[data-size="1"] {
+        @include add-frame-layout(0, 100%, 100%, 0, 0);
+      }
+
+      &[data-size="2"] {
+        @include add-frame-layout(0, 50%, 100%, 0, 0);
+        @include add-frame-layout(1, 50%, 100%, 50%, 0);
+      }
+
+      &[data-size="3"] {
+        @include add-frame-layout(0, 50%, 50%, 0, 0);
+        @include add-frame-layout(1, 50%, 50%, 50%, 0);
+        @include add-frame-layout(2, 100%, 50%, 0, 50%);
+      }
+
+      &[data-size="4"] {
+        @include add-frame-layout(0, 50%, 50%, 0, 0);
+        @include add-frame-layout(1, 50%, 50%, 50%, 0);
+        @include add-frame-layout(2, 50%, 50%, 0, 50%);
+        @include add-frame-layout(3, 50%, 50%, 50%, 50%);
+      }
+
+      &[data-size="5"] {
+        @include add-frame-layout(0, 50%, 50%, 0, 0);
+        @include add-frame-layout(1, 50%, 50%, 50%, 0);
+        @include add-frame-layout(2, 33.3%, 50%, 0, 50%);
+        @include add-frame-layout(3, 33.3%, 50%, 33.3%, 50%);
+        @include add-frame-layout(4, 33.4%, 50%, 66.6%, 50%);
+      }
+
+      &[data-size="6"] {
+        @include add-frame-layout(0, 33.3%, 50%, 0, 0);
+        @include add-frame-layout(1, 33.3%, 50%, 33.3%, 0);
+        @include add-frame-layout(2, 33.4%, 50%, 66.6%, 0);
+        @include add-frame-layout(3, 33.3%, 50%, 0%, 50%);
+        @include add-frame-layout(4, 33.3%, 50%, 33.3%, 50%);
+        @include add-frame-layout(5, 33.4%, 50%, 66.6%, 50%);
+      }
+
+      &[data-size="7"] {
+        @include add-frame-layout(0, 33.3%, 50%, 0, 0);
+        @include add-frame-layout(1, 33.3%, 50%, 33.3%, 0);
+        @include add-frame-layout(2, 33.4%, 50%, 66.6%, 0);
+        @include add-frame-layout(3, 25%, 50%, 0%, 50%);
+        @include add-frame-layout(4, 25%, 50%, 25%, 50%);
+        @include add-frame-layout(5, 25%, 50%, 50%, 50%);
+        @include add-frame-layout(6, 25%, 50%, 75%, 50%);
+      }
+
+      &[data-size="8"] {
+        @include add-frame-layout(0, 50%, 33.3%, 0, 0);
+        @include add-frame-layout(1, 50%, 33.3%, 50%, 0);
+        @include add-frame-layout(2, 33.3%, 33.3%, 0%, 33.3%);
+        @include add-frame-layout(3, 33.3%, 33.3%, 33.3%, 33.3%);
+        @include add-frame-layout(4, 33.4%, 33.3%, 66.6%, 33.3%);
+        @include add-frame-layout(5, 33.3%, 33.4%, 0, 66.6%);
+        @include add-frame-layout(6, 33.3%, 33.4%, 33.3%, 66.6%);
+        @include add-frame-layout(7, 33.4%, 33.4%, 66.6%, 66.6%);
+      }
+
+      &[data-size="9"] {
+        @include add-frame-layout(0, 33.3%, 33.3%, 0, 0);
+        @include add-frame-layout(1, 33.3%, 33.3%, 33.3%, 0);
+        @include add-frame-layout(2, 33.4%, 33.4%, 66.6%, 0);
+        @include add-frame-layout(3, 33.3%, 33.3%, 0, 33.3%);
+        @include add-frame-layout(4, 33.3%, 33.3%, 33.3%, 33.3%);
+        @include add-frame-layout(5, 33.4%, 33.4%, 66.6%, 33.3%);
+        @include add-frame-layout(6, 33.3%, 33.3%, 0, 66.6%);
+        @include add-frame-layout(7, 33.3%, 33.3%, 33.3%, 66.6%);
+        @include add-frame-layout(8, 33.4%, 33.4%, 66.6%, 66.6%);
+      }
+    }
+  }
+}

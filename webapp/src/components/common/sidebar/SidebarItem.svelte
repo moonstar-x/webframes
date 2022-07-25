@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import { currentSite } from '../../../stores/sites';
+  import { currentSite, multiFrameEnabled, openSites } from '../../../stores/sites';
   import { contextMenuData } from '../../../stores/contextMenu';
   import { changePageTitle } from '../../../utils';
 
@@ -25,6 +25,8 @@
 
   const handleClick = () => {
     currentSite.update(site);
+    multiFrameEnabled.update(false);
+    openSites.update([]);
     changePageTitle(site.name);
   };
 </script>

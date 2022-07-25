@@ -65,9 +65,15 @@
       error = `Request Error: ${err}`;
     }
   };
+
+  const handleEnter = (e) => {
+    if (e.keyCode === 13) {
+      handleSubmit(e);
+    };
+  };
 </script>
 
-<form class="form" on:submit={handleSubmit}>
+<form class="form" on:submit={handleSubmit} on:keydown={handleEnter}>
   {#if error}
     <ErrorAlert {error} />
   {/if}
@@ -87,7 +93,7 @@
   </div>
   <div class="form-section image-form">
     <div class="form-group">
-      <label class="form-label button" for="fimage">Upload Image</label>
+      <label class="form-label button" for="fimage" tabindex="0">Upload Image</label>
       <input class="form-input" type="file" id="fimage" accept="image/*" on:change={handleImagePick} />
       {#if image}
         <img alt="preview" src={image} />

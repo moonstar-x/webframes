@@ -51,6 +51,15 @@
     }
   }
 
+  &.multi-framing-item {
+    color: $light-purple;
+
+    &:hover {
+      color: #fff;
+      background-color: $light-purple;
+    }
+  }
+
   img {
     width: inherit;
     border-radius: inherit;

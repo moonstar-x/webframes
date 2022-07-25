@@ -1,14 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@400;700&display=swap');
 
 @import './variables.scss';
+@import './mixins.scss';
 @import './global.scss';
 
 @import '../components/common/alert/alert.scss';
 @import '../components/common/content/content.scss';
 @import '../components/common/contextMenu/contextMenu.scss';
+@import '../components/common/dropdown/dropdown.scss';
 @import '../components/common/form/form.scss';
 @import '../components/common/button/button.scss';
 @import '../components/common/frameHolder/frameHolder.scss';
+@import '../components/common/frameHolder/multiFrameHolder.scss';
 @import '../components/common/loadingSpinner/loadingSpinner.scss';
 @import '../components/common/modal/modal.scss';
 @import '../components/common/requestError/requestError.scss';

@@ -3,10 +3,11 @@
   import { dndzone } from 'svelte-dnd-action';
   import SidebarItem from './SidebarItem.svelte';
   import AddSiteSidebarItem from './AddSiteSidebarItem.svelte';
+  import MultiFrameSidebarItem from './MultiFrameSidebarItem.svelte';
   import ConfirmationModal from '../modal/ConfirmationModal.svelte';
   import EditSiteModal from '../modal/EditSiteModal.svelte';
   import { deleteSite, putOrder } from '../../../networking/sites';
-  import { currentSite, sites } from '../../../stores/sites';
+  import { currentSite, sites, openSites, multiFrameEnabled } from '../../../stores/sites';
   import { order } from '../../../stores/order';
   import { changePageTitle } from '../../../utils';
 
@@ -42,6 +43,14 @@
         if ($currentSite?.id === deleted.id) {
           currentSite.update(null);
           changePageTitle();
+        }
+
+        if ($multiFrameEnabled) {
+          openSites.delete((site) => site.id !== deleted.id);
+          
+          if ($openSites.length < 1) {
+            multiFrameEnabled.update(false);
+          }
         }
 
         showDeleteModal = false;
@@ -82,7 +91,10 @@
     <ul class="sidebar-list" use:dndzone={{ items: orderedSites, dragDisabled, flipDurationMs: 200 }} on:consider={handleDragConsider} on:finalize={handleDragFinalize}>
       {#each orderedSites as site (site.id)}
         <SidebarItem
-          active={$currentSite ? site.id === $currentSite.id : false}
+          active={$multiFrameEnabled ?
+            ($openSites.some((s) => s.id === site.id)) :
+            ($currentSite ? site.id === $currentSite.id : false)
+          }
           {site}
           on:siteDelete={handleSiteDelete}
           on:siteEdit={handleSiteEdit}
@@ -93,6 +105,7 @@
         />
       {/each}
       <AddSiteSidebarItem />
+      <MultiFrameSidebarItem />
     </ul>
   </div>
 </nav>
