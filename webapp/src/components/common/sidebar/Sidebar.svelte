@@ -3,6 +3,7 @@
   import { dndzone } from 'svelte-dnd-action';
   import SidebarItem from './SidebarItem.svelte';
   import AddSiteSidebarItem from './AddSiteSidebarItem.svelte';
+  import MultiFrameSidebarItem from './MultiFrameSidebarItem.svelte';
   import ConfirmationModal from '../modal/ConfirmationModal.svelte';
   import EditSiteModal from '../modal/EditSiteModal.svelte';
   import { deleteSite, putOrder } from '../../../networking/sites';
@@ -93,6 +94,7 @@
         />
       {/each}
       <AddSiteSidebarItem />
+      <MultiFrameSidebarItem />
     </ul>
   </div>
 </nav>
