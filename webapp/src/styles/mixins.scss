@@ -1,0 +1,8 @@
+@mixin add-frame-layout($index, $width, $height, $left, $top) {
+  .multi-frame-child[data-index="#{$index}"] {
+    width: $width;
+    height: $height;
+    left: $left;
+    top: $top;
+  }
+}

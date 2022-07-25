@@ -26,12 +26,14 @@
       url: siteDataById[detail][1],
       key
     });
-    console.dir($openSites);
   };
 
   const handleDeleteFrame = (key) => {
     openSites.delete((openSite) => openSite.key !== key);
-    console.dir($openSites);
+
+    if ($openSites.length < 1) {
+      multiFrameEnabled.update(false);
+    }
   };
 
   const handleAddFrame = () => {
