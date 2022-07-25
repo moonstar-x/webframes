@@ -18,7 +18,7 @@
 </script>
 
 <!-- svelte-ignore a11y-no-onchange -->
-<select name={name} bind:value={current} on:change={handleChange}>
+<select class="dropdown" name={name} bind:value={current} on:change={handleChange}>
   <option value={null} disabled hidden>{placeholder}</option>
   {#each values as { value, text }}
     <option value={value}>{text}</option>

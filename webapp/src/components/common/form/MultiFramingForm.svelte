@@ -70,9 +70,9 @@
     <InfoAlert>
       You can frame up to 9 sites at the same time. Multi framing is currently <strong>{$multiFrameEnabled ? 'enabled' : 'disabled'}</strong>.
     </InfoAlert>
-    <div class="form-section text-form">
+    <div class="form-section column-section">
       {#each $openSites as openSite, idx (openSite.key)}
-        <div class="form-group">
+        <div class="inline-form-group">
           <span>Frame #{idx + 1}</span>
           <Dropdown
             defaultValue={openSite.id}

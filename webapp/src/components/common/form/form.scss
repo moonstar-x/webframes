@@ -7,8 +7,18 @@
   .form-section {
     display: flex;
 
+    &.column-section {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
     .form-group {
       flex: 1;
+    }
+
+    .inline-form-group {
+      display: flex;
+      gap: 1rem;
     }
 
     &.text-form {
