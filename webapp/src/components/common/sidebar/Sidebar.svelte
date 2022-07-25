@@ -91,7 +91,10 @@
     <ul class="sidebar-list" use:dndzone={{ items: orderedSites, dragDisabled, flipDurationMs: 200 }} on:consider={handleDragConsider} on:finalize={handleDragFinalize}>
       {#each orderedSites as site (site.id)}
         <SidebarItem
-          active={$currentSite ? site.id === $currentSite.id : false}
+          active={$multiFrameEnabled ?
+            ($openSites.some((s) => s.id === site.id)) :
+            ($currentSite ? site.id === $currentSite.id : false)
+          }
           {site}
           on:siteDelete={handleSiteDelete}
           on:siteEdit={handleSiteEdit}
