@@ -15,4 +15,14 @@
     background: $dark-blue;
     border: 1px solid $light-blue;
   }
+
+  &:disabled {
+    border: 1px solid $light-gray;
+    background: $light-gray;
+
+    &:hover, &:focus, &:active {
+      background: $light-gray;
+      border: 1px solid $light-gray;
+    }
+  }
 }

@@ -19,6 +19,10 @@
     .inline-form-group {
       display: flex;
       gap: 1rem;
+
+      span {
+        align-self: center;
+      }
     }
 
     &.text-form {

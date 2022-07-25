@@ -81,7 +81,7 @@
             name={`dropdown-multi-framing-${idx}`}
             on:select={(e) => handleSelectFrame(openSite.key, e)}
           />
-          <button on:click={() => handleDeleteFrame(openSite.key)}>X</button>
+          <button class="button" on:click={() => handleDeleteFrame(openSite.key)}>X</button>
         </div>
       {/each}
     </div>
