@@ -7,7 +7,7 @@
   import ConfirmationModal from '../modal/ConfirmationModal.svelte';
   import EditSiteModal from '../modal/EditSiteModal.svelte';
   import { deleteSite, putOrder } from '../../../networking/sites';
-  import { currentSite, sites } from '../../../stores/sites';
+  import { currentSite, sites, openSites, multiFrameEnabled } from '../../../stores/sites';
   import { order } from '../../../stores/order';
   import { changePageTitle } from '../../../utils';
 
@@ -43,6 +43,14 @@
         if ($currentSite?.id === deleted.id) {
           currentSite.update(null);
           changePageTitle();
+        }
+
+        if ($multiFrameEnabled) {
+          openSites.delete((site) => site.id !== deleted.id);
+          
+          if ($openSites.length < 1) {
+            multiFrameEnabled.update(false);
+          }
         }
 
         showDeleteModal = false;
