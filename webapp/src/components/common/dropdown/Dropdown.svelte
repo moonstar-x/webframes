@@ -8,7 +8,6 @@
   export let name = 'dropdown';
 
   let current = defaultValue || null;
-  console.log(current)
 
   const dispatch = createEventDispatcher();
 

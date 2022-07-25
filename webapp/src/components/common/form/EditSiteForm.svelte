@@ -28,7 +28,6 @@
 
   const handleImageDelete = (e) => {
     e.preventDefault();
-    console.log('deleted image')
 
     image = null;
     shouldEditImage = true;
