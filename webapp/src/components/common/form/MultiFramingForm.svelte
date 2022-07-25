@@ -5,13 +5,13 @@
   import { sites, currentSite, multiFrameEnabled, openSites } from '../../../stores/sites';
   import { order } from '../../../stores/order';
 
-  let siteNames = $sites.reduce((acc, cur) => {
-    acc[cur.id] = cur.name;
+  let siteDataById = $sites.reduce((acc, cur) => {
+    acc[cur.id] = [cur.name, cur.url];
     return acc;
   }, {});
 
   let orderedSiteValues = $order.map((id) => {
-    const name = siteNames[id];
+    const [name] = siteDataById[id];
 
     return {
       value: id,
@@ -22,7 +22,8 @@
   const handleSelectFrame = (key, { detail }) => {
     openSites.replace((openSite) => openSite.key === key, {
       id: detail,
-      name: siteNames[detail],
+      name: siteDataById[detail][0],
+      url: siteDataById[detail][1],
       key
     });
     console.dir($openSites);
@@ -39,6 +40,7 @@
     openSites.add({
       id: null,
       name: null,
+      url: null,
       key: Math.random().toString()
     });
   };
