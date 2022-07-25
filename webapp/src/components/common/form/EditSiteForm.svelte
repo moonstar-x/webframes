@@ -28,16 +28,17 @@
 
   const handleImageDelete = (e) => {
     e.preventDefault();
+    console.log('deleted image')
 
     image = null;
     shouldEditImage = true;
   };
 
   const handleImagePick = (e) => {
-    shouldEditImage = true;
     const file = e.target.files[0];
     return imageToDataURI(file)
       .then((uri) => {
+        shouldEditImage = true;
         image = uri;
       });
   };
@@ -54,6 +55,10 @@
         newSite.image = image || await getImageWithInitials(newSite.name || site.name);
       }
       
+      if (Object.keys(newSite).length < 1) {
+        return;
+      }
+
       const updatedSite = await patchSite(site.id, newSite);
       sites.replace((old) => old.id === site.id, updatedSite);
 
@@ -73,6 +78,12 @@
       error = `Request Error: ${err}`;
     }
   };
+
+  const handleEnter = (e) => {
+    if (e.keyCode === 13) {
+      handleSubmit(e);
+    };
+  };
 </script>
 
 <style>
@@ -81,7 +92,7 @@
   }
 </style>
 
-<form class="form" on:submit={handleSubmit}>
+<form class="form" on:submit={handleSubmit} on:keydown={handleEnter}>
   {#if error}
     <ErrorAlert {error} />
   {/if}
@@ -101,7 +112,7 @@
   </div>
   <div class="form-section image-form">
     <div class="form-group">
-      <label class="form-label mt-0 button" for="fimage">Upload Image</label>
+      <label class="form-label mt-0 button" for="fimage" tabindex="0">Upload Image</label>
       <input class="form-input" type="file" id="fimage" accept="image/*" on:change={handleImagePick} />
       {#if image}
         <img alt="preview" src={image} />
